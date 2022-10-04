@@ -13,3 +13,8 @@ def index():
 @login_required
 def profile():
     return render_template('profile.html', name=current_user.name)
+
+@main.route('/material')
+@login_required
+def material():
+    return render_template('material.html')

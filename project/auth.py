@@ -6,9 +6,9 @@ from flask_login import login_user, logout_user, login_required
 from .models import User
 from . import db
 
-auth = Blueprint('auth', __name__)
+auth = Blueprint('auth', __name__) 
 
-@auth.route('/login')
+@auth.route('/login')  
 def login():
     return render_template('login.html')
 
@@ -37,7 +37,7 @@ def signup():
 @auth.route('/signup', methods=['POST'])
 def signup_post():
 
-    email = request.form.get('email')
+    email = request.form.get('username')
     name = request.form.get('name')
     password = request.form.get('password')
 

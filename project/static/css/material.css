@@ -1,0 +1,68 @@
+h2 {  /*Book*/
+	text-align: center;
+	padding-top: 75px;
+  }
+  
+  
+  h3 { /*Chapter*/
+	text-align: center;
+	padding-top: 60px;
+	padding-bottom: 20px;
+	
+  }
+  
+  dt {
+	visibility: hidden;
+	display: inline-block;
+	font-size: 0;
+  }
+	dt::first-letter {
+	visibility: visible;
+	font-size: 20pt;
+  }
+  
+	dt:hover {
+	visibility: visible;
+	font-size: 20pt;
+  
+	}
+  
+  
+  
+  
+  table {
+	border-spacing: 15px;
+  
+  }
+  
+  h4 { /*Verse*/
+	text-align: left;
+	vertical-align: top;
+	font-weight: lighter;
+  }
+  
+  b {
+	font-weight: bolder;
+	text-decoration-line: underline;
+	text-decoration-style: dotted;
+  }
+  
+  
+  .number {
+	vertical-align: top;
+  }
+  
+  .quote {
+	vertical-align: top;
+	color: blue;
+  }
+  
+  u1 {
+	  text-decoration-line: underline;
+	  text-decoration-style: solid;  
+  }
+  
+  u2 {
+	text-decoration-line: underline;
+	text-decoration-style: double;
+  }
