@@ -1,0 +1,30 @@
+<table>
+	<tr>
+		<td>
+			<form action="/question/back" method="post">
+				<button type="submit" type="button">Back</button>
+			</form>
+		</td>
+		<td style="text-align: center;"><h2>Question #{{num}}</h2></td>
+		<td>
+			<form action="/question/next" method="post">
+				<button type="submit" type="button">Next</button>
+			</form>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><div style="text-align: center;">[{{ t }}]&nbsp;{{ q }}</div></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><div style="text-align: center; margin-top: 100px;"><h3>Answer:</h3></div></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><div style="text-align: center;">[{{ r }}]&nbsp;{{ a }}</div></td>
+		<td></td>
+	</tr>
+</table>

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>New Quiz</h1>
+<form action="{{ url_for('newquiz') }}" method="post">
+  <label for="fname">QuizMasterID:</label><br>
+  <input type="text" id="fname" name="fname" value="abc123"><br>
+  {% for name in ['Team1', 'Team2', 'Team3'] %}
+    <label for="{{ name }}name">{{ name }}'s Name/Count</label>
+    <input type="text" id="{{ name }}name" name="{{ name }}name" value="{{ name }}">
+    <!-- <label for="{{ name }}count">Quizers:</label> -->
+    <input type="number" id="{{ name }}count" name="{{ name }}count" min="0" max="7" value="5"><br>  
+  {% endfor %}  
+
+
+  <input type="submit" value="Submit">
+  </form>
+{% endblock %}
