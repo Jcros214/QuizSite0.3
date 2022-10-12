@@ -8,7 +8,7 @@ CREATE TABLE user (
         PRIMARY KEY (id), 
         UNIQUE (email)
 );
-INSERT INTO user VALUES(1,'jcros214@gmail.com','sha256$YUAgH910WcYSn9eg$cd1b1b802a3360043cb34e3e8297d1da7b3a8bda33ca3678caf3a3b2eec983d3','Jon');
+-- INSERT INTO user VALUES(1,'jcros214@gmail.com','sha256$YUAgH910WcYSn9eg$cd1b1b802a3360043cb34e3e8297d1da7b3a8bda33ca3678caf3a3b2eec983d3','Jon');
 COMMIT;
 
 
