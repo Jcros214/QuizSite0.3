@@ -1,19 +1,12 @@
-from flask import Blueprint, redirect, request, render_template
+globQuiz seems to be reset on each call of quizpage()
 
-quiz = Blueprint('quiz', __name__)
+
+```python
 
 from .static.python.quiz import Quiz as quizClass
 
-from .static.python.getQuestions import QuestionSet, Question, makeQuestions
-
-questionset = QuestionSet(makeQuestions())
-quizset = questionset.quizset
-questionNum = 0
-
 globQuiz = quizClass()
 
-# A decorator used to tell the application
-# which URL is associated function
 @quiz.route('/quiz', methods =["GET", "POST"])
 def quizpage():
     global globQuiz
@@ -56,10 +49,29 @@ def quizpage():
             print(globQuiz)
             return render_template("quiz.html", quiz=globQuiz, curQues=Question("Hit Next to start quiz", '', '', ''))
  
+```
 
-# @quiz.route("/question/<prog>", methods=['GET', 'POST'])
-# def items(prog=None):
+```
+Note: 	ImmutableMultiDict is request.form
+		<project.static.python.quiz.Quiz object...> is the variable in question
 
-@quiz.route('/activequizzes')
-def activequizzes():
-    return redirect('/')
+...
+
+7.0.0.1 - - [13/Oct/2022 01:11:08] "GET /quiz HTTP/1.1" 200 -
+
+...
+ 
+ImmutableMultiDict([('fname', 'abc123'), ('Team1name', 'Team1'), ('Team1count', '5'), ('Team2name', 'Team2'), ('Team2count', '5'), ('Team3name', 'Team3'), ('Team3count', '5')]) 
+ 
+
+<project.static.python.quiz.Quiz object at 0x106e2aad0>
+127.0.0.1 - - [13/Oct/2022 01:11:09] "POST /quiz HTTP/1.1" 200 -
+...
+ 
+ImmutableMultiDict([('action', 'next')]) 
+ 
+
+<project.static.python.quiz.Quiz object at 0x106ed2a70>
+127.0.0.1 - - [13/Oct/2022 01:11:10] "POST /quiz HTTP/1.1" 200 -
+...
+```
