@@ -1,12 +1,47 @@
-<!-- templates/index.html -->
-
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-<h1 class="title">
-  Flask Login Example
-</h1>
-<h2 class="subtitle">
-  Easy authentication and authorization in Flask.
-</h2>
+
+<h1 style="padding-top: 60px; padding-bottom: 20px;">{% block title %} QuizBox {% endblock %}</h1>
+<h3>Under active development.</h3>
+
+<div>
+  <div style="padding-top: 50px;">
+	<p>Spectators: Scan/enter a room code</p>
+	<div id="qr-reader" style="width:500px"></div>
+	  <div id="qr-reader-results"></div>
+	  <script>
+
+		var resultContainer = document.getElementById('qr-reader-results');
+		var lastResult, countResults = 0;
+
+		function onScanSuccess(decodedText, decodedResult) {
+			if (decodedText !== lastResult) {
+				++countResults;
+				lastResult = decodedText;
+				// Handle on success condition with the decoded message.
+				console.log(`Scan result ${decodedText}`, decodedResult);
+			}
+		}
+
+		var html5QrcodeScanner = new Html5QrcodeScanner(
+			"qr-reader", { fps: 10, qrbox: 250 });
+		html5QrcodeScanner.render(onScanSuccess);
+
+	  </script>
+    <form action="">
+      <table>
+        <tr>
+        <td> <input type="text" id="roomNum"> </td>
+        <td> <button onclick="popup()" type="submit">Submit</button> </td>
+        </tr>
+      </table>    
+    </form>
+
+  </div>
+  <div style="padding-top: 25px;">
+	<p>Quizmasters/Admins: <a href="{{ url_for('auth.login') }}">Login</a></p>
+  </div>
+</div>
+
 {% endblock %}
