@@ -1,4 +1,4 @@
-import static.python.getQuestions as ques
+from .getQuestions import QuestionSet, Question, makeQuestions 
 
 class Team():
 	def __init__(self, init) -> None:
@@ -11,7 +11,7 @@ class Team():
 
 class Quiz():
 	def __init__(self, team1=('',''), team2=('',''), team3=('','')) -> None:
-		questionset = ques.QuestionSet(ques.makeQuestions())
+		questionset = QuestionSet(makeQuestions())
 		self.master = ''
 		self.team1 = Team(team1)
 		self.team2 = Team(team2)

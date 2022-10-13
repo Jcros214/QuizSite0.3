@@ -1,20 +1,20 @@
 <table>
 	<tr>
-		<td>
-			<form action="/question/back" method="post">
-				<button type="submit" type="button">Back</button>
-			</form>
-		</td>
-		<td style="text-align: center;"><h2>Question #{{num}}</h2></td>
-		<td>
-			<form action="/question/next" method="post">
-				<button type="submit" type="button">Next</button>
-			</form>
-		</td>
+		<form method="post">
+			<td>
+				<button type="submit" type="button" name="action" value="back">Back</button>
+			</td>
+
+			<td style="text-align: center;"><h2>Question #{{num}}</h2></td>
+
+			<td>
+				<button type="submit" type="button" name="action" value="next">Next</button>
+			</td>
+		</form>
 	</tr>
 	<tr>
 		<td></td>
-		<td><div style="text-align: center;">[{{ t }}]&nbsp;{{ q }}</div></td>
+		<td><div style="text-align: center;">[{{ curQues.t }}]&nbsp;{{ curQues.q }}</div></td>
 		<td></td>
 	</tr>
 	<tr>
@@ -24,7 +24,7 @@
 	</tr>
 	<tr>
 		<td></td>
-		<td><div style="text-align: center;">[{{ r }}]&nbsp;{{ a }}</div></td>
+		<td><div style="text-align: center;">[{{ curQues.r }}]&nbsp;{{ curQues.a }}</div></td>
 		<td></td>
 	</tr>
 </table>

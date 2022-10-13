@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>New Quiz</h1>
-<form action="{{ url_for('newquiz') }}" method="post">
+<form method="post">
   <label for="fname">QuizMasterID:</label><br>
   <input type="text" id="fname" name="fname" value="abc123"><br>
   {% for name in ['Team1', 'Team2', 'Team3'] %}
@@ -14,5 +14,5 @@
 
 
   <input type="submit" value="Submit">
-  </form>
+</form>
 {% endblock %}
