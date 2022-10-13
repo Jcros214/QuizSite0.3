@@ -40,7 +40,7 @@ words = list()
 for file in bookNameDict:
     material[file] = {} # Create section for book
     book = material[file]
-    with open("QuizSite/static/txt/" + file + ".txt", 'r') as file:
+    with open("project/static/txt/" + file + ".txt", 'r') as file:
         text = file.read().replace('\n',' ')
 
     for verse in re.finditer(versePattern, text):
@@ -99,7 +99,19 @@ def keywordify(word: str) -> str:
 space = '  '
 
 
-html = ""
+html = '''{{ style|safe }} 
+<h1>Material</h1>
+<form>
+    <table style="margin: auto">
+        <tr>
+            <td>
+                <button type="submit" type="button" name="words" value="true">Show Words</button>
+                <button type="submit" type="button" name="words" value="flase">Show Letters</button>
+            </td>
+        </tr>
+    </table>
+</form>
+'''
 
 for book in material:
     bookName = book
@@ -141,6 +153,6 @@ html = """
 {% endblock %}
 """
 
-with open('QuizSite/templates/material.html', 'w') as file:
+with open('project/templates/material.html', 'w') as file:
         file.write(html)
         print("HTML written!")

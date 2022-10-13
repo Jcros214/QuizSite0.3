@@ -11,24 +11,7 @@ globQuiz = quizClass()
 def quizpage():
     global globQuiz
     
-    if request.method == "GET": return render_template('newquiz.html')
-    print('\n', '\n', request.form, '\n', '\n')
-
-    if request.method == "POST":
-        if request.form.get('back') or request.form.get('next'): # posted from question advance buttons
-            global questionNum 
-            if request.form.get('back'):
-                # User hit 'back'
-                questionNum -= 1
-            else:
-                # User hit 'next'
-                questionNum += 1
-
-            if questionNum < 1 or questionNum > 20:
-                questionNum = 0
-                item = Question("Hit Next to start quiz", '', '', '')
-            else:
-                item = quizset[questionNum-1]
+...
             print(globQuiz)
             return render_template('quiz.html', quiz=globQuiz, num=questionNum, curQues=item)
             # global Quiz

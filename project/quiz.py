@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, request, render_template
 
 quiz = Blueprint('quiz', __name__)
 
-from .static.python.quiz import Quiz as quizClass
+from . import quizClass
 
 from .static.python.getQuestions import QuestionSet, Question, makeQuestions
 

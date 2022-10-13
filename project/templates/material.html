@@ -3,6 +3,25 @@
 {% block title %} Material {% endblock %}
 {% block content %}
 
+<style>
+  em {
+    color: blue;
+  }
+</style>
+
+
+{{ style|safe }} 
+<h1>Material</h1>
+<form>
+    <table style="margin: auto">
+        <tr>
+            <td>
+                <button type="submit" type="button" name="words" value="true">Show Words</button>
+                <button type="submit" type="button" name="words" value="flase">Show Letters</button>
+            </td>
+        </tr>
+    </table>
+</form>
 <h2>I Corinthians
   <h3 id="ICor1">I Corinthians 1
     <table>
@@ -2254,7 +2273,7 @@
         </td>
       </tr>
       <tr>
-        <td>4</td>
+        <td><em>4</em></td>
         <td>
           <h4>
             <dt>Now</dt> <dt>there</dt> <dt>are</dt> <dt>diversities</dt> <dt>of</dt> <dt>gifts</dt>, <dt>but</dt> <dt>the</dt> <dt>same</dt> <dt>Spirit</dt>. 
@@ -2278,7 +2297,7 @@
         </td>
       </tr>
       <tr>
-        <td>7</td>
+        <td><em>7</em></td>
         <td>
           <h4>
             <dt>But</dt> <dt>the</dt> <dt><u2>manifestation</u2></dt> <dt>of</dt> <dt>the</dt> <dt>Spirit</dt> <dt>is</dt> <dt>given</dt> <dt>to</dt> <dt>every</dt> <dt>man</dt> <dt>to</dt> <dt>profit</dt> <dt><u1>withal</u1></dt>. 
@@ -2310,7 +2329,7 @@
         </td>
       </tr>
       <tr>
-        <td>11</td>
+        <td><em>11</em></td>
         <td>
           <h4>
             <dt>But</dt> <dt>all</dt> <dt>these</dt> <dt>worketh</dt> <dt>that</dt> <dt>one</dt> <dt>and</dt> <dt>the</dt> <dt>selfsame</dt> <dt>Spirit</dt>, <dt><u1>dividing</u1></dt> <dt>to</dt> <dt>every</dt> <dt>man</dt> <dt><u1>severally</u1></dt> <dt>as</dt> <dt>he</dt> <dt>will</dt>. 
@@ -2318,7 +2337,7 @@
         </td>
       </tr>
       <tr>
-        <td>12</td>
+        <td><em>12</em></td>
         <td>
           <h4>
             <dt>For</dt> <dt>as</dt> <dt>the</dt> <dt>body</dt> <dt>is</dt> <dt>one</dt>, <dt>and</dt> <dt>hath</dt> <dt>many</dt> <dt>members</dt>, <dt>and</dt> <dt>all</dt> <dt>the</dt> <dt>members</dt> <dt>of</dt> <dt>that</dt> <dt>one</dt> <dt>body</dt>, <dt>being</dt> <dt>many</dt>, <dt>are</dt> <dt>one</dt> <dt>body</dt>: <dt>so</dt> <dt>also</dt> <dt>is</dt> <dt>Christ</dt>. 
@@ -2326,7 +2345,7 @@
         </td>
       </tr>
       <tr>
-        <td>13</td>
+        <td><em>13</em></td>
         <td>
           <h4>
             <dt>For</dt> <dt>by</dt> <dt>one</dt> <dt>Spirit</dt> <dt>are</dt> <dt>we</dt> <dt>all</dt> <dt>baptized</dt> <dt>into</dt> <dt>one</dt> <dt>body</dt>, <dt>whether</dt> <dt>we</dt> <dt>be</dt> <dt>Jews</dt> <dt>or</dt> <dt>Gentiles</dt>, <dt>whether</dt> <dt>we</dt> <dt>be</dt> <dt><u1>bond</u1></dt> <dt>or</dt> <dt>free</dt>; <dt>and</dt> <dt>have</dt> <dt>been</dt> <dt>all</dt> <dt>made</dt> <dt>to</dt> <dt>drink</dt> <dt>into</dt> <dt>one</dt> <dt>Spirit</dt>. 
@@ -2366,7 +2385,7 @@
         </td>
       </tr>
       <tr>
-        <td>18</td>
+        <td><em>18</em></td>
         <td>
           <h4>
             <dt>But</dt> <dt>now</dt> <dt>hath</dt> <dt>God</dt> <dt>set</dt> <dt>the</dt> <dt>members</dt> <dt>every</dt> <dt>one</dt> <dt>of</dt> <dt>them</dt> <dt>in</dt> <dt>the</dt> <dt>body</dt>, <dt>as</dt> <dt>it</dt> <dt>hath</dt> <dt>pleased</dt> <dt>him</dt>. 
@@ -2422,7 +2441,7 @@
         </td>
       </tr>
       <tr>
-        <td>25</td>
+        <td><em>25</em></td>
         <td>
           <h4>
             <dt>That</dt> <dt>there</dt> <dt>should</dt> <dt>be</dt> <dt>no</dt> <dt><u1>schism</u1></dt> <dt>in</dt> <dt>the</dt> <dt>body</dt>; <dt>but</dt> <dt>that</dt> <dt>the</dt> <dt>members</dt> <dt>should</dt> <dt>have</dt> <dt>the</dt> <dt>same</dt> <dt>care</dt> <dt>one</dt> <dt>for</dt> <dt>another</dt>. 
@@ -2438,7 +2457,7 @@
         </td>
       </tr>
       <tr>
-        <td>27</td>
+        <td><em>27</em></td>
         <td>
           <h4>
             <dt>Now</dt> <dt>ye</dt> <dt>are</dt> <dt>the</dt> <dt>body</dt> <dt>of</dt> <dt>Christ</dt>, <dt>and</dt> <dt>members</dt> <dt>in</dt> <dt><u1>particular</u1></dt>. 
@@ -2470,7 +2489,7 @@
         </td>
       </tr>
       <tr>
-        <td>31</td>
+        <td><em>31</em></td>
         <td>
           <h4>
             <dt>But</dt> <dt><u2>covet</u2></dt> <dt><u2>earnestly</u2></dt> <dt>the</dt> <dt><u1>best</u1></dt> <dt>gifts</dt>: <dt>and</dt> <dt>yet</dt> <dt>shew</dt> <dt>I</dt> <dt>unto</dt> <dt>you</dt> <dt>a</dt> <dt>more</dt> <dt><u1>excellent</u1></dt> <dt>way</dt>. 

@@ -7,6 +7,9 @@ from flask_login import LoginManager
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 
+from .static.python.quiz import Quiz as quizClass
+globQuiz = quizClass()
+
 def create_app():
     app = Flask(__name__)
 
@@ -34,10 +37,11 @@ def create_app():
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
-    # blueprint for non-auth parts of app
+    # blueprint for quiz parts of app
+
     from .quiz import quiz as quiz_blueprint
     app.register_blueprint(quiz_blueprint)
 
     return app
 
-print(__name__)
+# print(__name__)

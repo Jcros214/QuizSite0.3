@@ -7,25 +7,11 @@ h2 {  /*Book*/
   h3 { /*Chapter*/
 	text-align: center;
 	padding-top: 60px;
+	/* padding-left: 40px; */
 	padding-bottom: 20px;
 	
   }
   
-  dt {
-	visibility: hidden;
-	display: inline-block;
-	font-size: 0;
-  }
-	dt::first-letter {
-	visibility: visible;
-	font-size: 20pt;
-  }
-  
-	dt:hover {
-	visibility: visible;
-	font-size: 20pt;
-  
-	}
   
   
   
@@ -33,6 +19,9 @@ h2 {  /*Book*/
   table {
 	border-spacing: 15px;
   
+  }
+  td {
+	padding: 0 15px;
   }
   
   h4 { /*Verse*/
