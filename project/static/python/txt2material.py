@@ -12,6 +12,7 @@ versePattern = r"([0-9]{1,2}):([0-9]{1,2})([A-z,':;()?.\n ]+)"
 verseSymbols = [',',':',';','(',')','?','.']
 
 import re
+import json
 
 materialview = {
     'ICor': {
@@ -59,6 +60,12 @@ for file in bookNameDict:
 
 once =  ([word for word in words if words.count(word) == 1])
 twice = ([word for word in words if words.count(word) == 2])
+
+
+with open("project/static/json/quotes.json") as json_file:
+    quotes = json.load(json_file)
+
+
 
 
 def keywordify(word: str) -> str:
@@ -113,6 +120,11 @@ html = '''{{ style|safe }}
 </form>
 '''
 
+def verseNum(book: str, chapter: str, number: str) -> str:
+    if int(number) in quotes[book][chapter]:
+        return f"<em>{number}</em>"
+    return number
+
 for book in material:
     bookName = book
     html = html + f"<h2>{bookNameDict[bookName]}"
@@ -121,11 +133,15 @@ for book in material:
         html = html + f"""
   <h3 id="{bookName}{chapter}">{bookNameDict[bookName]} {str(chapter)}
     <table>"""
+        ch_str = str(chapter)
         chapter = book[chapter]
         for verse in chapter:
+
+            
+
             html = html + f"""
       <tr>
-        <td>{chapter.index(verse)+1}</td>
+        <td>{verseNum(bookName, ch_str, chapter.index(verse)+1)}</td>
         <td>
           <h4>
             """
@@ -156,3 +172,6 @@ html = """
 with open('project/templates/material.html', 'w') as file:
         file.write(html)
         print("HTML written!")
+
+# with open("project/static/json/material.json", 'w') as outfile:
+#     json.dump(material, outfile)
