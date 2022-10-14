@@ -44,7 +44,7 @@ class QuestionSet():
 		return output		
 
 
-path = 'project/static/txt/i-iiCOR.txt'
+path = 'QuizSite0.3/project/static/txt/i-iiCOR.txt'
 
 def makeQuestions():
 	with open(path, 'r') as file:
