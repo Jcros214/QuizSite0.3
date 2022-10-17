@@ -54,5 +54,5 @@ display: inline-block;
 @main.route('/quiztracker')
 @login_required
 def quizTracker():
-    return render_template('quizTracker.html')
+    return render_template('quiztracker.html')
         
