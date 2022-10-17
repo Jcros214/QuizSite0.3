@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Quiz Tracker {% endblock %}</h1>
+
+	<style>
+		button {
+			padding: 8%;
+			margin: 20px;
+		}
+		.quizzerleft {
+			background-color: blue;
+		}
+		.quizzerright {
+			background-color: red;
+		}
+	</style>
+	<table style="text-align: center; margin: auto;">
+		<tr>
+			<td>
+				score:<br>[SCORE]
+			</td>
+			<td style="width: 33%;">
+				<button>✓</button>
+				<button>✕</button>
+				<button>T</button>	
+			</td>
+			<td>
+				score:<br>[SCORE]
+			</td>
+		</tr>
+	</table>
+	<style>
+		td {
+			padding-left: 20px;
+		}
+	</style>
+	<table style="text-align: center; margin: auto;">
+		<tr>
+			<td>
+				<table style="text-align: center;display:inline-table">
+					<th>#</th> <th>Correct</th> <th>Incorrect</th>
+					<tr><td>1</td><td>0</td><td>0</td></tr>
+					<tr><td>2</td><td>0</td><td>0</td></tr>
+					<tr><td>3</td><td>0</td><td>0</td></tr>
+					<tr><td>4</td><td>0</td><td>0</td></tr>
+					<tr><td>5</td><td>0</td><td>0</td></tr>
+				</table>
+			</td>
+			<td><h3>Team1</h3></td>
+			<td><h3>Team2</h3></td>
+			<td>
+				<table style="text-align: center;display: inline-table;">
+					<th>#</th> <th>Correct</th> <th>Incorrect</th>
+					<tr><td>1</td><td>0</td><td>0</td></tr>
+					<tr><td>2</td><td>0</td><td>0</td></tr>
+					<tr><td>3</td><td>0</td><td>0</td></tr>
+					<tr><td>4</td><td>0</td><td>0</td></tr>
+					<tr><td>5</td><td>0</td><td>0</td></tr>		
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><button class="quizzerleft">1</button></td><td><button class="quizzerright">1</button></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><button class="quizzerleft">2</button></td><td><button class="quizzerright">2</button></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><button class="quizzerleft">3</button></td><td><button class="quizzerright">3</button></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><button class="quizzerleft">4</button></td><td><button class="quizzerright">4</button></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><button class="quizzerleft">5</button></td><td><button class="quizzerright">5</button></td>
+			<td></td>
+		</tr>
+	</table>
+
+
+{% endblock %}

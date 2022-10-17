@@ -8,6 +8,22 @@ from . import db
 
 auth = Blueprint('auth', __name__) 
 
+@auth.route('/createAdmin')
+def createAdmin():
+    # create new user with the form data. Hash the password so plaintext version isn't saved.
+    church, team, name, age, uname, password = 'COG', 'N/A', 'SA', 0, 'admin', 'password' 
+    new_user = User(church=church, team=team, name=name, age=age, uname=uname, password=generate_password_hash(password, method='sha256'))
+
+    # new_user.church = church
+    # new_user.team = team
+    # new_user.age = age
+
+    # add the new user to the database
+    db.session.add(new_user)
+    db.session.commit()
+
+    return redirect(url_for('auth.login'))
+
 @auth.route('/login')  
 def login():
     return render_template('login.html')

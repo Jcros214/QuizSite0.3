@@ -51,3 +51,8 @@ display: inline-block;
         pass
     return render_template('material.html', style=style)
         
+@main.route('/quiztracker')
+@login_required
+def quizTracker():
+    return render_template('quizTracker.html')
+        
