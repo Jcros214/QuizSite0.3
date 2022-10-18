@@ -47,6 +47,11 @@
 					<tr><td>3</td><td id="left3correct">0</td><td id="left3incorrect">0</td><td id="left3error">0</td></tr>
 					<tr><td>4</td><td id="left4correct">0</td><td id="left4incorrect">0</td><td id="left4error">0</td></tr>
 					<tr><td>5</td><td id="left5correct">0</td><td id="left5incorrect">0</td><td id="left5error">0</td></tr>
+					<tfoot>
+						<tr>
+							<td>Total</td> <td id="leftcorrect">0</td> <td id="leftincorrect">0</td> <td id="lefterror">0</td>
+						</tr>
+					</tfoot>
 				</table>
 			</td>
 			<td>
@@ -61,6 +66,12 @@
 					<tr><td>3</td><td id="right3correct">0</td><td id="right3incorrect">0</td> <td id="right3error">0</td> </tr>
 					<tr><td>4</td><td id="right4correct">0</td><td id="right4incorrect">0</td> <td id="right4error">0</td> </tr>
 					<tr><td>5</td><td id="right5correct">0</td><td id="right5incorrect">0</td> <td id="right5error">0</td> </tr>
+					<tfoot>
+						<tr>
+							<td>Total</td> <td id="rightcorrect">0</td> <td id="rightincorrect">0</td> <td id="righterror">0</td>
+						</tr>
+					</tfoot>
+
 				</table>
 			</td>
 		</tr>
@@ -110,10 +121,24 @@
 		}
 		function points(eventtype)
 		{
-			var quizzer = document.getElementsByClassName('isClicked');
-			var cellID = quizzer[0].id + eventtype
+			
+			var quizzer = document.getElementsByClassName('isClicked')[0];
+			var side = quizzer.id.slice(0,-1)
+			var quizzerNum = quizzer.id;
+			var teamMissed = Number(document.getElementById(side+'incorrect').innerHTML);
+			var questionnum = Number(document.getElementById('questionnum').innerHTML);
+			if (eventtype == 'incorrect'){
+				// console.log(document.getElementById(side+'error'))
+				if (teamMissed >= 3 || questionnum >= 16) {
+					// error instead of incorrect
+					// console.log('Made it into if')
+					eventtype = 'error'
+				};
+			};
+			var cellID = quizzerNum + eventtype
+			console.log(cellID)
 			document.getElementById(cellID).innerHTML = Number(document.getElementById(cellID).innerHTML) + 1;
-			document.getElementById('questionnum').innerHTML = Number(document.getElementById('questionnum').innerHTML) + 1;
+			document.getElementById('questionnum').innerHTML = questionnum + 1;
 			unselect()
 			updateScore()
 		}
@@ -124,19 +149,35 @@
 		function updateScore()
 		{
 			var scores = {
-				left: {correct: 0, 'e': 0},
-				right: {correct: 0, 'e': 0}
+				left: {correct: 0, incorrect: 0,'e': 0},
+				right: {correct: 0,incorrect: 0, 'e': 0}
 			}
 			for (const side of ['left', 'right']){
 				for (const index of ['1', '2', '3', '4', '5']){
-					console.log(side+index)
-					scores[side].correct += Number(document.getElementById(side+index+'correct').innerHTML)
-					scores[side].e += Number(document.getElementById(side+index+'error').innerHTML)
-					
+					// console.log(side+index)
+					scores[side].correct += Number(document.getElementById(side+index+'correct').innerHTML);
+					scores[side].incorrect += Number(document.getElementById(side+index+'incorrect').innerHTML);
+					scores[side].e += Number(document.getElementById(side+index+'error').innerHTML);
+
+					var individualErrors = Number(document.getElementById(side+index+'incorrect').innerHTML) 
+						+ Number(document.getElementById(side+index+'error').innerHTML);
+					var individualCorrect = Number(document.getElementById(side+index+'correct').innerHTML);
+					console.log(individualErrors)
+					if (individualCorrect >= 5 || individualErrors >=4)
+					{
+						alert("Quizzer #"+index+" has quizzed out!")
+					}
+
 				}
 			}
-			document.getElementById('rightscore').innerHTML = (scores.right.correct*20) - (scores.right.e*10);
-			document.getElementById('leftscore').innerHTML = (scores.left.correct*20) - (scores.left.e*10);
+			for (const side of ['left', 'right']){
+				document.getElementById(side+'correct').innerHTML = scores[side].correct
+				document.getElementById(side+'incorrect').innerHTML = scores[side].incorrect
+				document.getElementById(side+'error').innerHTML = scores[side].e
+				
+				
+				document.getElementById(side+'score').innerHTML = (scores[side].correct*20) - (scores[side].e*10);
+			}
 			
 		}
 </script>
