@@ -59,16 +59,17 @@
 									Home
 								</a>
 							</td>
+							<td>
+								<a href="{{ url_for('main.quizTracker') }}" class="navbar-item">
+									Track Quiz
+								</a>
+							</td>
+
 							
 							{% if current_user.is_authenticated %}
 								<td>
 									<a href="{{ url_for('main.profile') }}" class="navbar-item">
 										Profile
-									</a>
-								</td>
-								<td>
-									<a href="{{ url_for('main.quizTracker') }}" class="navbar-item">
-										Track Quiz
 									</a>
 								</td>
 								
