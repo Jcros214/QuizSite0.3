@@ -6,88 +6,131 @@
 	<style>
 		button {
 			padding: 15% 25%;
-			margin: 5%;
+			/* margin: 5%; */
 			border-radius: 10%;
 			width: 50%;
 		}
-		.quizzerleft {
+
+		.quizzer {
+			color: white;
+		}
+
+		.isClicked {
+			background-color: black!important;
+		}
+		
+
+		.left {
 			background-color: blue;
 		}
-		.quizzerright {
+		.right {
 			background-color: red;
 		}
-	</style>
-	<table style="text-align: center; margin: auto;height: 20%;width: 80%;">
-		<tr>
-			<td>
-				score:<br>[SCORE]
-			</td>
-			<td style="width: 33%;">
-				<button>✓</button>
-				<button>✕</button>
-				<button>T</button>	
-			</td>
-			<td>
-				score:<br>[SCORE]
-			</td>
-		</tr>
-	</table>
-	<style>
 		td {
-			padding-left: 20px;
+			margin: 0 35%;
 		}
 	</style>
-	<table style="text-align: center; margin: auto;height: 70%;width: 80%;">
+	<h2>Asking Question #:</h2>
+	<h2 id="questionnum">1</h2>
+	
+	<table style="margin-top: 100px;text-align: center; margin-top: 20%; margin-right: auto; margin-left: auto;height: 70%;width: 80%;">
 		<tr>
 			<td>
+				<h2>Team1</h2>
+				<h3 id="leftscore">0</h3>
 				<table style="text-align: center;display:inline-table">
-					<th>#</th>	<th>Correct</th>	<th>Incorrect</th>
-					<tr><td>1</td><td>0</td><td>0</td></tr>
-					<tr><td>2</td><td>0</td><td>0</td></tr>
-					<tr><td>3</td><td>0</td><td>0</td></tr>
-					<tr><td>4</td><td>0</td><td>0</td></tr>
-					<tr><td>5</td><td>0</td><td>0</td></tr>
+					<th>#</th>	<th style="padding-right: 1em; padding-left: 1em;">Correct</th>	<th style="padding-right: 1em; padding-left: 1em;">Incorrect</th> <th>E</th>
+					<tr><td>1</td><td id="left1correct">0</td><td id="left1incorrect">0</td><td id="left1error">0</td></tr>
+					<tr><td>2</td><td id="left2correct">0</td><td id="left2incorrect">0</td><td id="left2error">0</td></tr>
+					<tr><td>3</td><td id="left3correct">0</td><td id="left3incorrect">0</td><td id="left3error">0</td></tr>
+					<tr><td>4</td><td id="left4correct">0</td><td id="left4incorrect">0</td><td id="left4error">0</td></tr>
+					<tr><td>5</td><td id="left5correct">0</td><td id="left5incorrect">0</td><td id="left5error">0</td></tr>
 				</table>
 			</td>
-			<td><h3>Team1</h3></td>
-			<td><h3>Team2</h3></td>
 			<td>
+				<button style="height: 33%;" onclick="points('correct')">✓</button>
+				<button style="height: 33%;" onclick="points('incorrect')">✕</button>
+				<button style="height: 33%;" onclick="unselect()"		>T</button>	
+			</td>
+			<td>
+				<h2>Team2</h2>
+				<h3 id="rightscore">0</h3>
 				<table style="text-align: center;display: inline-table;">
-					<th>#</th> <th>Correct</th> <th>Incorrect</th>
-					<tr><td>1</td><td>0</td><td>0</td></tr>
-					<tr><td>2</td><td>0</td><td>0</td></tr>
-					<tr><td>3</td><td>0</td><td>0</td></tr>
-					<tr><td>4</td><td>0</td><td>0</td></tr>
-					<tr><td>5</td><td>0</td><td>0</td></tr>		
+					<th>#</th> <th style="padding-right: 1em; padding-left: 1em;">Correct</th> <th style="padding-right: 1em; padding-left: 1em;">Incorrect</th> <th>E</th>
+					<tr><td>1</td><td id="right1correct">0</td><td id="right1incorrect">0</td> <td id="right1error">0</td> </tr>
+					<tr><td>2</td><td id="right2correct">0</td><td id="right2incorrect">0</td> <td id="right2error">0</td> </tr>
+					<tr><td>3</td><td id="right3correct">0</td><td id="right3incorrect">0</td> <td id="right3error">0</td> </tr>
+					<tr><td>4</td><td id="right4correct">0</td><td id="right4incorrect">0</td> <td id="right4error">0</td> </tr>
+					<tr><td>5</td><td id="right5correct">0</td><td id="right5incorrect">0</td> <td id="right5error">0</td> </tr>
 				</table>
 			</td>
 		</tr>
 		<tr>
-			<td ></td>
-			<td><button style="width: 70px" class="quizzerleft">1</button></td><td><button style="width: 70px" class="quizzerright">1</button></td>
-			<td ></td>
+			<td><button onClick="select_quizzer(this.id)" id="left1"  style="width: 70px" class="quizzer left" >1</button></td>
+			<td></td>
+			<td><button onClick="select_quizzer(this.id)" id="right1" style="width: 70px" class="quizzer right">1</button></td>
 		</tr>
 		<tr>
-			<td ></td>
-			<td><button style="width: 70px" class="quizzerleft">2</button></td><td><button style="width: 70px" class="quizzerright">2</button></td>
-			<td ></td>
+			<td><button onClick="select_quizzer(this.id)" id="left2"  style="width: 70px" class="quizzer left" >2</button></td>
+			<td></td>
+			<td><button onClick="select_quizzer(this.id)" id="right2" style="width: 70px" class="quizzer right">2</button></td>
 		</tr>
 		<tr>
-			<td ></td>
-			<td><button style="width: 70px" class="quizzerleft">3</button></td><td><button style="width: 70px" class="quizzerright">3</button></td>
-			<td ></td>
+			<td><button onClick="select_quizzer(this.id)" id="left3"  style="width: 70px" class="quizzer left" >3</button></td>
+			<td></td>
+			<td><button onClick="select_quizzer(this.id)" id="right3" style="width: 70px" class="quizzer right">3</button></td>
 		</tr>
 		<tr>
-			<td ></td>
-			<td><button style="width: 70px" class="quizzerleft">4</button></td><td><button style="width: 70px" class="quizzerright">4</button></td>
-			<td ></td>
+			<td><button onClick="select_quizzer(this.id)" id="left4"  style="width: 70px" class="quizzer left" >4</button></td>
+			<td></td>
+			<td><button onClick="select_quizzer(this.id)" id="right4" style="width: 70px" class="quizzer right">4</button></td>
 		</tr>
 		<tr>
-			<td ></td>
-			<td><button style="width: 70px" class="quizzerleft">5</button></td><td><button style="width: 70px" class="quizzerright">5</button></td>
-			<td ></td>
+			<td><button onClick="select_quizzer(this.id)" id="left5"  style="width: 70px" class="quizzer left" >5</button></td>
+			<td></td>
+			<td><button onClick="select_quizzer(this.id)" id="right5" style="width: 70px" class="quizzer right">5</button></td>
 		</tr>
 	</table>
 
+	<!-- onClick="select_quizzer(this.id)" -->
+	
+	<script type="text/javascript">
+		function select_quizzer(clicked_id)
+		{
+			unselect()
+			document.getElementById(clicked_id).classList.add('isClicked');
+		}
+		function points(eventtype)
+		{
+			var quizzer = document.getElementsByClassName('isClicked');
+			var cellID = quizzer[0].id + eventtype
+			document.getElementById(cellID).innerHTML = Number(document.getElementById(cellID).innerHTML) + 1;
+			document.getElementById('questionnum').innerHTML = Number(document.getElementById('questionnum').innerHTML) + 1;
+			unselect()
+			updateScore()
+		}
+		function unselect()
+		{
+			Array.from(document.getElementsByClassName('isClicked')).forEach((el) => el.classList.remove('isClicked'));
+		}
+		function updateScore()
+		{
+			var scores = {
+				left: {correct: 0, 'e': 0},
+				right: {correct: 0, 'e': 0}
+			}
+			for (const side of ['left', 'right']){
+				for (const index of ['1', '2', '3', '4', '5']){
+					console.log(side+index)
+					scores[side].correct += Number(document.getElementById(side+index+'correct').innerHTML)
+					scores[side].e += Number(document.getElementById(side+index+'error').innerHTML)
+					
+				}
+			}
+			document.getElementById('rightscore').innerHTML = (scores.right.correct*20) - (scores.right.e*10);
+			document.getElementById('leftscore').innerHTML = (scores.left.correct*20) - (scores.left.e*10);
+			
+		}
+</script>
 
 {% endblock %}
