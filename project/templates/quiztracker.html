@@ -168,6 +168,7 @@
 			quizzer = getQuizzerInDict(quizzer.id);
 			if (eventtype == 'incorrect'){
 				if (!isRebound) {
+					isRebound = true;
 					if (scores[quizzer.side].total.incorrect >= 3 || questionnum >= 16) {
 						quizzer.error += 1;
 						scores[quizzer.side].total.error += 1;
