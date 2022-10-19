@@ -28,6 +28,9 @@
 		.right {
 			background-color: red;
 		}
+		.disabled {
+			display: none;
+		}
 		td {
 			margin: 0 35%;
 		}
@@ -80,7 +83,7 @@
 			<td >
 				<button style="height: 33%;" onclick="points('correct')">✓</button>
 				<button style="height: 33%;" onclick="points('incorrect')">✕</button>
-				<button style="height: 33%;" onclick="unselect()"		>T</button>	
+				<button style="height: 33%;" onclick="points('reset')">Reset</button>
 			</td>
 			<td></td>
 		</tr>
@@ -114,72 +117,116 @@
 	<!-- onClick="select_quizzer(this.id)" -->
 	
 	<script type="text/javascript">
-		function select_quizzer(clicked_id)
+		var scores = {
+			left: {
+				individuals: [
+					{side:'left',number:1,name: 'left1',correct: 0, incorrect:0, error:0, alreadyOut:false},
+					{side:'left',number:2,name: 'left2',correct: 0, incorrect:0, error:0, alreadyOut:false},
+					{side:'left',number:3,name: 'left3',correct: 0, incorrect:0, error:0, alreadyOut:false},
+					{side:'left',number:4,name: 'left4',correct: 0, incorrect:0, error:0, alreadyOut:false},
+					{side:'left',number:5,name: 'left5',correct: 0, incorrect:0, error:0, alreadyOut:false}
+				],
+				total: {correct: 0, incorrect:0, error:0, score:0, bonus:0}
+			},
+			right: {
+				individuals: [
+					{side:'right', number:1, name: 'right1',correct: 0, incorrect:0, error:0, alreadyOut:false},
+					{side:'right', number:2, name: 'right2',correct: 0, incorrect:0, error:0, alreadyOut:false},
+					{side:'right', number:3, name: 'right3',correct: 0, incorrect:0, error:0, alreadyOut:false},
+					{side:'right', number:4, name: 'right4',correct: 0, incorrect:0, error:0, alreadyOut:false},
+					{side:'right', number:5, name: 'right5',correct: 0, incorrect:0, error:0, alreadyOut:false}
+				],
+				total: {correct: 0, incorrect:0, error:0, score:0, bonus:0}
+			}
+		};
+		var questionnum = 1;
+		var isRebound = false;
+
+		function select_quizzer(clicked_id) 
 		{
 			unselect()
 			document.getElementById(clicked_id).classList.add('isClicked');
 		}
-		function points(eventtype)
+		function getQuizzerInDict(quizzerID)
+		{return scores[quizzerID.slice(0,-1)].individuals[quizzerID.slice(-1) - 1]}
+		function reset()
 		{
-			
-			var quizzer = document.getElementsByClassName('isClicked')[0];
-			var side = quizzer.id.slice(0,-1)
-			var quizzerNum = quizzer.id;
-			var teamMissed = Number(document.getElementById(side+'incorrect').innerHTML);
-			var questionnum = Number(document.getElementById('questionnum').innerHTML);
-			if (eventtype == 'incorrect'){
-				// console.log(document.getElementById(side+'error'))
-				if (teamMissed >= 3 || questionnum >= 16) {
-					// error instead of incorrect
-					// console.log('Made it into if')
-					eventtype = 'error'
-				};
-			};
-			var cellID = quizzerNum + eventtype
-			console.log(cellID)
-			document.getElementById(cellID).innerHTML = Number(document.getElementById(cellID).innerHTML) + 1;
-			document.getElementById('questionnum').innerHTML = questionnum + 1;
-			unselect()
-			updateScore()
-		}
-		function unselect()
-		{
-			Array.from(document.getElementsByClassName('isClicked')).forEach((el) => el.classList.remove('isClicked'));
-		}
-		function updateScore()
-		{
-			var scores = {
-				left: {correct: 0, incorrect: 0,'e': 0},
-				right: {correct: 0,incorrect: 0, 'e': 0}
-			}
-			for (const side of ['left', 'right']){
-				for (const index of ['1', '2', '3', '4', '5']){
-					// console.log(side+index)
-					scores[side].correct += Number(document.getElementById(side+index+'correct').innerHTML);
-					scores[side].incorrect += Number(document.getElementById(side+index+'incorrect').innerHTML);
-					scores[side].e += Number(document.getElementById(side+index+'error').innerHTML);
-
-					var individualErrors = Number(document.getElementById(side+index+'incorrect').innerHTML) 
-						+ Number(document.getElementById(side+index+'error').innerHTML);
-					var individualCorrect = Number(document.getElementById(side+index+'correct').innerHTML);
-					console.log(individualErrors)
-					if (individualCorrect >= 5 || individualErrors >=4)
-					{
-						alert("Quizzer #"+index+" has quizzed out!")
+			var elements = document.getElementsByClassName('disabled');
+			for (var element in elements) {
+				if (elements.length > 0) {
+					if (elements[0].classList.contains('disabled')) {
+						elements[0].classList.remove('disabled')
 					}
-
 				}
 			}
-			for (const side of ['left', 'right']){
-				document.getElementById(side+'correct').innerHTML = scores[side].correct
-				document.getElementById(side+'incorrect').innerHTML = scores[side].incorrect
-				document.getElementById(side+'error').innerHTML = scores[side].e
-				
-				
-				document.getElementById(side+'score').innerHTML = (scores[side].correct*20) - (scores[side].e*10);
-			}
-			
+			unselect();
 		}
+		function points(eventtype)
+		{	
+			var quizzer = document.getElementsByClassName('isClicked')[0];
+			if (quizzer == undefined){return;}
+			quizzer = getQuizzerInDict(quizzer.id);
+			if (eventtype == 'incorrect'){
+				if (!isRebound) {
+					if (scores[quizzer.side].total.incorrect >= 3 || questionnum >= 16) {
+						quizzer.error += 1;
+						scores[quizzer.side].total.error += 1;
+					} else {
+						quizzer.incorrect +=1 ;
+						scores[quizzer.side].total.incorrect += 1;
+					};
+					var elements = document.getElementsByClassName(quizzer.side);
+					for (var i of elements) {
+						i.classList.add('disabled')
+					}
+					
+
+
+				} 
+				else {
+					isRebound = false;
+					reset();
+				};
+				if (quizzer.incorrect + quizzer.error >= 4) {
+					alert('Quizzer '+quizzer.name+' has quized out.')
+				}
+			} else if (eventtype == 'correct') {
+				quizzer.correct += 1;
+				scores[quizzer.side].total.correct += 1;
+				reset();
+				isRebound = false;
+				if (quizzer.correct >= 5) {
+					if (quizzer.error + quizzer.incorrect == 0) {
+						scores[quizzer.side].total.bonus += 10;
+						alert('Quizzer '+quizzer.name+' has quized out with a bonus!');
+					} else {
+						alert('Quizzer '+quizzer.name+' has quized out!')
+					}
+				}
+			} else if (eventtype == 'reset') {
+				isRebound = false;
+				reset();
+				return;
+			}
+			unselect()
+			for (const side in scores) {
+				for (const quizzer of scores[side].individuals) {
+					document.getElementById(quizzer.name+'correct').innerHTML = quizzer.correct;
+					document.getElementById(quizzer.name+'incorrect').innerHTML = quizzer.incorrect;
+					document.getElementById(quizzer.name+'error').innerHTML = quizzer.error;
+
+					document.getElementById(side+'correct').innerHTML = scores[side].total.correct;
+					document.getElementById(side+'incorrect').innerHTML = scores[side].total.incorrect;
+					document.getElementById(side+'error').innerHTML = scores[side].total.error;
+
+				};
+				scores[side].total.score = scores[side].total.correct*20 - scores[side].total.error*10 + scores[side].total.bonus;
+				document.getElementById(side+'score').innerHTML = scores[side].total.score;
+			};
+			questionnum += 1;
+			document.getElementById('questionnum').innerHTML = questionnum
+		};
+		function unselect(){ Array.from(document.getElementsByClassName('isClicked')).forEach((el) => el.classList.remove('isClicked'))}
 </script>
 
 {% endblock %}
