@@ -204,6 +204,7 @@
 						alert('Quizzer '+quizzer.name+' has quized out!')
 					}
 				}
+				questionnum += 1;
 			} else if (eventtype == 'reset') {
 				isRebound = false;
 				reset();
@@ -224,7 +225,7 @@
 				scores[side].total.score = scores[side].total.correct*20 - scores[side].total.error*10 + scores[side].total.bonus;
 				document.getElementById(side+'score').innerHTML = scores[side].total.score;
 			};
-			questionnum += 1;
+			
 			document.getElementById('questionnum').innerHTML = questionnum
 		};
 		function unselect(){ Array.from(document.getElementsByClassName('isClicked')).forEach((el) => el.classList.remove('isClicked'))}
