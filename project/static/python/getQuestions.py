@@ -4,10 +4,10 @@ from time import sleep
 import os
 
 class Question():
-	def __init__(self, question, answer, reference, type) -> None:
-		self.q = question
-		self.a = answer
-		self.r = reference
+	def __init__(self, question: str, answer: str, reference: str, type: str) -> None:
+		self.q = question.strip()
+		self.a = answer.strip()
+		self.r = reference.strip()
 		try:
 			self.book = self.r[:2]
 			# self.chapter = self.r[3:self.r.find(':')]
@@ -32,12 +32,12 @@ class QuestionSet():
 		print(question.r,'\n')
 	
 	# get a set number of questions from specified chapter
-	def getQuestions(self, count: int, chapter: str) -> list:
+	def getQuestions(self, count: int, chapter: list) -> list:
 		# if type(chapter) != type(str):
 		# 	raise ValueError
 		output = list()
 		for question in self.randomQuestions:
-			if question.chRef == chapter:
+			if question.chRef in chapter:
 				output.append(question)
 			if len(output) >= count:
 				break
@@ -79,3 +79,11 @@ def makeQuestions():
 			r = ''
 
 	return questions
+
+
+# questions = QuestionSet(makeQuestions())
+# questions = questions.getQuestions(26, ['1C 15', '1C 16', '2C 1', '2C 2'])
+# for question in questions:
+# 	# print(question.q)
+
+# # print(questions)

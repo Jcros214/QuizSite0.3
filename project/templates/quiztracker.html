@@ -35,10 +35,29 @@
 			margin: 0 35%;
 		}
 	</style>
-	<h2>Asking Question #:</h2>
-	<h2 id="questionnum">1</h2>
+	<style>
+		h2,h3,h4 {
+			text-align: center;
+		}
+	</style>
 	
-	<table style="margin-top: 100px;text-align: center; margin-top: 10%; margin-right: auto; margin-left: auto;height: 70%;width: 80%;">
+	<table style="margin-top: 100px; margin-bottom: 0%;text-align: center; margin-top: 1%; margin-right: auto; margin-left: auto; height: min-content;">
+		
+		<tr><td><h2>Asking Question #: </h2></td></tr>
+		<tr><td><h2 id="questionnum">1</h2></td></tr>
+		<tr><td><h3>Question</h3></td></tr>
+		<tr><td><h3 id="questiontype">({{ t1 }})</h3></td></tr>
+		<tr><td><h4 id="question">{{ q1 }}</h4></td></tr>
+		<tr><td><h3>Answer:</h3></td></tr>
+		<tr><td><h4 id="questionreference">{{ a1 }}</h4></td></tr>
+	</table>
+
+
+
+
+
+	
+	<table style="text-align: center; margin-top: 10%; margin-right: auto; margin-left: auto;height: 70%;width: 80%;">
 		<tr>
 			<td>
 				<h2>Team1</h2>
@@ -117,6 +136,8 @@
 	<!-- onClick="select_quizzer(this.id)" -->
 	
 	<script type="text/javascript">
+		var questions = {{ questionset|safe }}
+
 		var scores = {
 			left: {
 				individuals: [
@@ -140,6 +161,7 @@
 			}
 		};
 		var questionnum = 1;
+		var questioncounter = 1;
 		var isRebound = false;
 
 		function select_quizzer(clicked_id) 
@@ -162,7 +184,7 @@
 			unselect();
 		}
 		function points(eventtype)
-		{	
+		{
 			var quizzer = document.getElementsByClassName('isClicked')[0];
 			if (quizzer == undefined){return;}
 			quizzer = getQuizzerInDict(quizzer.id);
@@ -180,9 +202,6 @@
 					for (var i of elements) {
 						i.classList.add('disabled')
 					}
-					
-
-
 				} 
 				else {
 					isRebound = false;
@@ -228,7 +247,11 @@
 			
 			document.getElementById('questionnum').innerHTML = questionnum
 		};
-		function unselect(){ Array.from(document.getElementsByClassName('isClicked')).forEach((el) => el.classList.remove('isClicked'))}
-</script>
+		function unselect()
+		{ Array.from(document.getElementsByClassName('isClicked')).forEach((el) => el.classList.remove('isClicked'))}
+		function next()
+		{
 
+		}
+</script>
 {% endblock %}
