@@ -31,32 +31,34 @@
 		.disabled {
 			display: none;
 		}
+		.out {
+			display: none;
+		}
 		td {
 			margin: 0 35%;
 		}
 	</style>
 	<style>
-		h2,h3,h4 {
+		h2,h3,h4,h5 {
 			text-align: center;
+			padding:0%;
 		}
 	</style>
 	
-	<table style="margin-top: 100px; margin-bottom: 0%;text-align: center; margin-top: 1%; margin-right: auto; margin-left: auto; height: min-content;">
+	<table style="margin-top: 100px; margin-bottom: 0%;text-align: center; margin-top: 1%; margin-right: auto; margin-left: auto; height: 25%;">
 		
 		<tr><td><h2>Asking Question #: </h2></td></tr>
 		<tr><td><h2 id="questionnum">1</h2></td></tr>
 		<tr><td><h3>Question</h3></td></tr>
 		<tr><td><h3 id="questiontype">({{ t1 }})</h3></td></tr>
-		<tr><td><h4 id="question">{{ q1 }}</h4></td></tr>
+		<tr><td><h4 id="questionquestion">{{ q1 }}</h4></td></tr>
 		<tr><td><h3>Answer:</h3></td></tr>
-		<tr><td><h4 id="questionreference">{{ a1 }}</h4></td></tr>
+		<tr><td><h4>Reference:</h4></td></tr>
+		<tr><td><h5 id="questionreference">{{ r1 }}</h5></td></tr>
+		
+		<tr><td><h4 id="questionanswer">{{ a1 }}</h4></td></tr>
 	</table>
 
-
-
-
-
-	
 	<table style="text-align: center; margin-top: 10%; margin-right: auto; margin-left: auto;height: 70%;width: 80%;">
 		<tr>
 			<td>
@@ -100,9 +102,9 @@
 		<tr>
 			<td></td>
 			<td >
-				<button style="height: 33%;" onclick="points('correct')">✓</button>
-				<button style="height: 33%;" onclick="points('incorrect')">✕</button>
-				<button style="height: 33%;" onclick="points('reset')">Reset</button>
+				<button style="height: 33%;" onclick="correct()">✓</button>
+				<button style="height: 33%;" onclick="incorrect()">✕</button>
+				<button style="height: 33%;" onclick="reset()">Reset</button>
 			</td>
 			<td></td>
 		</tr>
@@ -132,8 +134,6 @@
 			<td><button onClick="select_quizzer(this.id)" id="right5" style="height: 40%;" class="quizzer right">5</button></td>
 		</tr>
 	</table>
-
-	<!-- onClick="select_quizzer(this.id)" -->
 	
 	<script type="text/javascript">
 		var questions = {{ questionset|safe }}
@@ -169,66 +169,12 @@
 			unselect()
 			document.getElementById(clicked_id).classList.add('isClicked');
 		}
-		function getQuizzerInDict(quizzerID)
-		{return scores[quizzerID.slice(0,-1)].individuals[quizzerID.slice(-1) - 1]}
-		function reset()
-		{
-			var elements = document.getElementsByClassName('disabled');
-			for (var element in elements) {
-				if (elements.length > 0) {
-					if (elements[0].classList.contains('disabled')) {
-						elements[0].classList.remove('disabled')
-					}
-				}
-			}
-			unselect();
-		}
+		
 		function points(eventtype)
 		{
-			var quizzer = document.getElementsByClassName('isClicked')[0];
-			if (quizzer == undefined){return;}
-			quizzer = getQuizzerInDict(quizzer.id);
-			if (eventtype == 'incorrect'){
-				if (!isRebound) {
-					isRebound = true;
-					if (scores[quizzer.side].total.incorrect >= 3 || questionnum >= 16) {
-						quizzer.error += 1;
-						scores[quizzer.side].total.error += 1;
-					} else {
-						quizzer.incorrect +=1 ;
-						scores[quizzer.side].total.incorrect += 1;
-					};
-					var elements = document.getElementsByClassName(quizzer.side);
-					for (var i of elements) {
-						i.classList.add('disabled')
-					}
-				} 
-				else {
-					isRebound = false;
-					reset();
-				};
-				if (quizzer.incorrect + quizzer.error >= 4) {
-					alert('Quizzer '+quizzer.name+' has quized out.')
-				}
-			} else if (eventtype == 'correct') {
-				quizzer.correct += 1;
-				scores[quizzer.side].total.correct += 1;
-				reset();
-				isRebound = false;
-				if (quizzer.correct >= 5) {
-					if (quizzer.error + quizzer.incorrect == 0) {
-						scores[quizzer.side].total.bonus += 10;
-						alert('Quizzer '+quizzer.name+' has quized out with a bonus!');
-					} else {
-						alert('Quizzer '+quizzer.name+' has quized out!')
-					}
-				}
-				questionnum += 1;
-			} else if (eventtype == 'reset') {
 				isRebound = false;
 				reset();
 				return;
-			}
 			unselect()
 			for (const side in scores) {
 				for (const quizzer of scores[side].individuals) {
@@ -239,19 +185,121 @@
 					document.getElementById(side+'correct').innerHTML = scores[side].total.correct;
 					document.getElementById(side+'incorrect').innerHTML = scores[side].total.incorrect;
 					document.getElementById(side+'error').innerHTML = scores[side].total.error;
-
 				};
 				scores[side].total.score = scores[side].total.correct*20 - scores[side].total.error*10 + scores[side].total.bonus;
 				document.getElementById(side+'score').innerHTML = scores[side].total.score;
 			};
-			
-			document.getElementById('questionnum').innerHTML = questionnum
 		};
+		
+		function getActiveQuizzer()
+		{
+			var quizzer = document.getElementsByClassName('isClicked')[0];
+			if (quizzer == undefined){return;}
+			quizzer = scores[quizzer.id.slice(0,-1)].individuals[quizzer.id.slice(-1) - 1]
+			return quizzer;
+		};
+
+		function correct()
+		{
+			quizzer = getActiveQuizzer()
+
+			// Stats:
+			quizzer.correct += 1;
+			scores[quizzer.side].total.correct += 1;
+
+			// Points:
+			if (quizzer.correct >= 5) {
+				if (quizzer.error + quizzer.incorrect == 0) {
+					scores[quizzer.side].total.bonus += 10;
+					alert('Quizzer '+quizzer.name+' has quized out with a bonus!');
+				} else {
+					alert('Quizzer '+quizzer.name+' has quized out!')
+				}
+				document.getElementById(quizzer.name).classList.add('out')
+			}
+
+			// State:
+			reset();
+			next();
+			isRebound = false;
+		};
+		function incorrect()
+		{
+			quizzer = getActiveQuizzer()
+			// Check for rebound
+			if (!isRebound) { // If normal question:
+				isRebound = true;
+				if (scores[quizzer.side].total.incorrect >= 3 || questionnum >= 16) { // If in error zone
+					quizzer.error += 1;
+					scores[quizzer.side].total.error += 1;
+				} else {
+					quizzer.incorrect +=1 ;
+					scores[quizzer.side].total.incorrect += 1;
+				};
+
+				// Disable side
+				var elements = document.getElementsByClassName(quizzer.side);
+				for (var i of elements) {
+					i.classList.add('disabled')
+				}
+			}
+			else { // If errror was made on rebound
+				isRebound = false;
+				next();
+			};
+			if (quizzer.incorrect + quizzer.error >= 4) { // If quizzer has too many errors:
+				alert('Quizzer '+quizzer.name+' has quized out.')
+				document.getElementById(quizzer.name).classList.add('out')
+			}
+			
+		};
+		function reset()
+		{
+			// Enable everything
+				var elements = document.getElementsByClassName('disabled');
+				for (var element in elements) {
+					if (elements.length > 0) {
+						if (elements[0].classList.contains('disabled')) {
+							elements[0].classList.remove('disabled')
+						}
+					}
+				}
+			
+			unselect();
+			isRebound = false;
+		};
+		
+		function update()
+		{
+			for (const side in scores) {
+				for (const quizzer of scores[side].individuals) {
+					document.getElementById(quizzer.name+'correct').innerHTML = quizzer.correct;
+					document.getElementById(quizzer.name+'incorrect').innerHTML = quizzer.incorrect;
+					document.getElementById(quizzer.name+'error').innerHTML = quizzer.error;
+
+					document.getElementById(side+'correct').innerHTML = scores[side].total.correct;
+					document.getElementById(side+'incorrect').innerHTML = scores[side].total.incorrect;
+					document.getElementById(side+'error').innerHTML = scores[side].total.error;
+				};
+				scores[side].total.score = scores[side].total.correct*20 - scores[side].total.error*10 + scores[side].total.bonus;
+				document.getElementById(side+'score').innerHTML = scores[side].total.score;
+			};
+		};
+
 		function unselect()
 		{ Array.from(document.getElementsByClassName('isClicked')).forEach((el) => el.classList.remove('isClicked'))}
 		function next()
 		{
-
+			reset();
+			questionnum += 1;
+			questioncounter += 1;
+			document.getElementById('questionnum').innerHTML = questionnum
+			
+			for (var field of ['question', 'answer', 'type', 'reference']) {
+				htmlfield = 'question' + field
+				document.getElementById(htmlfield).innerHTML = questions[questioncounter][field]
+			}
+			update();
 		}
 </script>
 {% endblock %}
