@@ -36,7 +36,8 @@ def quizpage():
                 item = Question("Hit Next to start quiz", '', '', '')
             else:
                 item = quizset[questionNum-1]
-            print(globQuiz)
+            print("DebugA:", globQuiz)
+
             return render_template('quiz.html', quiz=globQuiz, num=questionNum, curQues=item)
             # global Quiz
             
@@ -53,7 +54,7 @@ def quizpage():
 
             # global Quiz
             globQuiz = quizClass((team1_name, team1_count),(team2_name, team2_count),(team3_name, team3_count))
-            print(globQuiz)
+            print("DebugB:",globQuiz)
             return render_template("quiz.html", quiz=globQuiz, curQues=Question("Hit Next to start quiz", '', '', ''))
  
 

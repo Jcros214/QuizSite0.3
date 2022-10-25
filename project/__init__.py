@@ -8,7 +8,6 @@ from flask_login import LoginManager
 db = SQLAlchemy()
 pass
 from .static.python.quiz import Quiz as quizClass
-globQuiz = quizClass()
 
 def create_app():
     app = Flask(__name__)

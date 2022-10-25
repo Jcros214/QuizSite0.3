@@ -1,2 +1,3 @@
 .DS_Store
 *.pyc
+project/static/python/__pycache__/getQuestions.cpython-310.pyc

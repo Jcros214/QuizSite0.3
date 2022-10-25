@@ -9,9 +9,14 @@ class Question():
 		self.a = answer.strip()
 		self.r = reference.strip()
 		try:
+			self.verse = int(self.r[self.r.find(':')+1:].strip())
+		except ValueError:
+			self.verse = -1
+		try:
 			self.book = self.r[:2]
 			# self.chapter = self.r[3:self.r.find(':')]
 			self.chRef = self.r[:self.r.find(':')]
+			
 		except:
 			pass
 
@@ -23,7 +28,7 @@ class QuestionSet():
 		self.questions = questions
 		self.randomQuestions = self.questions
 		random.shuffle(self.randomQuestions)
-		self.quizset = self.getQuestions(20, '1C 12')
+		self.quizset = None#self.getQuestions(20, '1C 12')
 	
 	def quiz(self, question: Question):
 		print(question.q)
@@ -37,7 +42,13 @@ class QuestionSet():
 		# 	raise ValueError
 		output = list()
 		for question in self.randomQuestions:
-			if question.chRef in chapter:
+			chref = question.chRef
+			try:
+				verse = question.verse
+			except:
+				verse = 11
+
+			if chref in chapter and question.verse <= 10:
 				output.append(question)
 			if len(output) >= count:
 				break

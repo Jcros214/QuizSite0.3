@@ -34,6 +34,9 @@
 		.out {
 			display: none;
 		}
+		.notExistant {
+			display: none;
+		}
 		td {
 			margin: 0 35%;
 		}
@@ -60,6 +63,15 @@
 	</table>
 
 	<table style="text-align: center; margin-top: 10%; margin-right: auto; margin-left: auto;height: 70%;width: 80%;">
+		<tr>
+			<td>
+				<button onclick="addQuizzer('left')">+</button><button onclick="rmQuizzer('left')">-</button>
+			</td>
+			<td></td>
+			<td>
+				<button onclick="addQuizzer('right')">+</button><button onclick="rmQuizzer('right')">-</button>
+			</td>
+		</tr>
 		<tr>
 			<td>
 				<h2>Team1</h2>
@@ -148,7 +160,8 @@
 					{side:'left',number:4,name: 'left4',correct: 0, incorrect:0, error:0, alreadyOut:false},
 					{side:'left',number:5,name: 'left5',correct: 0, incorrect:0, error:0, alreadyOut:false}
 				],
-				total: {correct: 0, incorrect:0, error:0, score:0, bonus:0}
+				total: {correct: 0, incorrect:0, error:0, score:0, bonus:0},
+				quizzers:4
 			},
 			right: {
 				individuals: [
@@ -158,7 +171,8 @@
 					{side:'right', number:4, name: 'right4',correct: 0, incorrect:0, error:0, alreadyOut:false},
 					{side:'right', number:5, name: 'right5',correct: 0, incorrect:0, error:0, alreadyOut:false}
 				],
-				total: {correct: 0, incorrect:0, error:0, score:0, bonus:0}
+				total: {correct: 0, incorrect:0, error:0, score:0, bonus:0},
+				quizzers:4
 			}
 		};
 		var questionnum = 1;
@@ -187,9 +201,9 @@
 					document.getElementById(side+'incorrect').innerHTML = scores[side].total.incorrect;
 					document.getElementById(side+'error').innerHTML = scores[side].total.error;
 				};
-				scores[side].total.score = scores[side].total.correct*20 - scores[side].total.error*10 + scores[side].total.bonus;
-				document.getElementById(side+'score').innerHTML = scores[side].total.score;
 			};
+			scores[side].total.score = scores[side].total.correct*20 - scores[side].total.error*10 + scores[side].total.bonus;
+			document.getElementById(side+'score').innerHTML = scores[side].total.score;
 		};
 		
 		function getActiveQuizzer()
@@ -273,6 +287,7 @@
 		function update()
 		{
 			for (const side in scores) {
+				var uniques = -1;
 				for (const quizzer of scores[side].individuals) {
 					document.getElementById(quizzer.name+'correct').innerHTML = quizzer.correct;
 					document.getElementById(quizzer.name+'incorrect').innerHTML = quizzer.incorrect;
@@ -281,8 +296,21 @@
 					document.getElementById(side+'correct').innerHTML = scores[side].total.correct;
 					document.getElementById(side+'incorrect').innerHTML = scores[side].total.incorrect;
 					document.getElementById(side+'error').innerHTML = scores[side].total.error;
+				
+					if (quizzer.correct > 0) {
+						uniques += 1;
+					}
 				};
-				scores[side].total.score = scores[side].total.correct*20 - scores[side].total.error*10 + scores[side].total.bonus;
+				var team_bonus = 0
+				if (uniques >= scores[side].quizzers) {
+					if (scores[side].quizzers == 4) {
+						team_bonus = 20
+					} else if (scores[side].quizzers == 3) {
+						team_bonus = 10
+					}
+				}
+			
+				scores[side].total.score = scores[side].total.correct*20 - scores[side].total.error*10 + scores[side].total.bonus + team_bonus;
 				document.getElementById(side+'score').innerHTML = scores[side].total.score;
 			};
 		};
@@ -302,5 +330,30 @@
 			}
 			update();
 		}
-</script>
+
+		function addQuizzer(team)
+		{
+			var quizzerCount = scores[team].quizzers;
+			var quizzer = document.getElementById(scores[team].individuals[Number(quizzerCount)].name)
+			if (quizzer.classList.contains('notExistant')) {
+				quizzer.classList.remove('notExistant')
+			}
+			if (scores[team].quizzers <=4) {
+				scores[team].quizzers += 1;
+			}
+		}
+
+		function rmQuizzer(team)
+		{
+			var quizzerCount = scores[team].quizzers;
+			var quizzer = document.getElementById(scores[team].individuals[Number(quizzerCount)].name)
+			if (!quizzer.classList.contains('notExistant')) {
+				quizzer.classList.add('notExistant')
+			}
+			scores[team].quizzers -= 1;
+			if (scores[team].quizzers >=1) {
+			//	scores[team].quizzers += 1;
+			}
+		}
+	</script>
 {% endblock %}

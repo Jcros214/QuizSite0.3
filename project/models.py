@@ -1,5 +1,15 @@
 # models.py
 
+
+# db structure:
+# PQA
+# |_Orginization
+#   |_Team
+#       |_Individual
+# |
+
+
+
 from flask_login import UserMixin
 from . import db
 
