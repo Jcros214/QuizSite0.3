@@ -6,7 +6,7 @@ from flask_login import LoginManager
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
-pass
+
 from .static.python.quiz import Quiz as quizClass
 
 def create_app():

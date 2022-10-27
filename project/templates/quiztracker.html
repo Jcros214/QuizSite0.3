@@ -185,26 +185,26 @@
 			document.getElementById(clicked_id).classList.add('isClicked');
 		}
 		
-		function points(eventtype)
-		{
-				isRebound = false;
-				reset();
-				return;
-			unselect()
-			for (const side in scores) {
-				for (const quizzer of scores[side].individuals) {
-					document.getElementById(quizzer.name+'correct').innerHTML = quizzer.correct;
-					document.getElementById(quizzer.name+'incorrect').innerHTML = quizzer.incorrect;
-					document.getElementById(quizzer.name+'error').innerHTML = quizzer.error;
-
-					document.getElementById(side+'correct').innerHTML = scores[side].total.correct;
-					document.getElementById(side+'incorrect').innerHTML = scores[side].total.incorrect;
-					document.getElementById(side+'error').innerHTML = scores[side].total.error;
-				};
-			};
-			scores[side].total.score = scores[side].total.correct*20 - scores[side].total.error*10 + scores[side].total.bonus;
-			document.getElementById(side+'score').innerHTML = scores[side].total.score;
-		};
+//		function points(eventtype)
+//		{
+//				isRebound = false;
+//				reset();
+//				return;
+//			unselect()
+//			for (const side in scores) {
+//				for (const quizzer of scores[side].individuals) {
+//					document.getElementById(quizzer.name+'correct').innerHTML = quizzer.correct;
+//					document.getElementById(quizzer.name+'incorrect').innerHTML = quizzer.incorrect;
+//					document.getElementById(quizzer.name+'error').innerHTML = quizzer.error;
+//
+//					document.getElementById(side+'correct').innerHTML = scores[side].total.correct;
+//					document.getElementById(side+'incorrect').innerHTML = scores[side].total.incorrect;
+//					document.getElementById(side+'error').innerHTML = scores[side].total.error;
+//				};
+//			};
+//			scores[side].total.score = scores[side].total.correct*20 - scores[side].total.error*10 + scores[side].total.bonus;
+//			document.getElementById(side+'score').innerHTML = scores[side].total.score;
+//		};
 		
 		function getActiveQuizzer()
 		{
@@ -259,8 +259,8 @@
 				}
 			}
 			else { // If errror was made on rebound
-				isRebound = false;
 				next();
+				isRebound = false;
 			};
 			if (quizzer.incorrect + quizzer.error >= 4) { // If quizzer has too many errors:
 				alert('Quizzer '+quizzer.name+' has quized out.')
@@ -320,7 +320,9 @@
 		function next()
 		{
 			reset();
-			questionnum += 1;
+			if (!isRebound) {
+				questionnum += 1; //DO NOT ADVANCE QUESTION NUM ON INCORRECT REBOUND
+			}
 			questioncounter += 1;
 			document.getElementById('questionnum').innerHTML = questionnum
 			
