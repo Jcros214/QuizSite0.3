@@ -1,8 +1,49 @@
 # Backend
+
+# All chapters for questions:
+allCh = [
+	'1C 1',
+	'1C 2',
+	'1C 3',
+	'1C 4',
+	'1C 5',
+	'1C 6',
+	'1C 7',
+	'1C 8',
+	'1C 9',
+	'1C 10',
+	'1C 11',
+	'1C 12',
+	'1C 13',
+	'1C 14',
+	'1C 15',
+	'1C 16',
+	'2C 1',
+	'2C 2',
+	'2C 3',
+	'2C 4',
+	'2C 5',
+	'2C 6',
+	'2C 7',
+	'2C 8',
+	'2C 9',
+	'2C 10',
+	'2C 11',
+	'2C 12',
+	'2C 13',	
+]
+
+mych = [
+	'1C 5',
+	'1C 7',
+	'1C 12',
+	'2C 1'
+]
+
 import random
 from time import sleep
 import os
-
+import json
 class Question():
 	def __init__(self, question: str, answer: str, reference: str, type: str) -> None:
 		self.q = question.strip()
@@ -24,7 +65,7 @@ class Question():
 		self.t = type
 
 class QuestionSet():
-	def __init__(self, questions) -> None:
+	def __init__(self, questions: list[Question]) -> None:
 		self.questions = questions
 		self.randomQuestions = self.questions
 		random.shuffle(self.randomQuestions)
@@ -32,9 +73,9 @@ class QuestionSet():
 	
 	def quiz(self, question: Question):
 		print(question.q)
-		input()
 		print(question.a)
 		print(question.r,'\n')
+		input()
 	
 	# get a set number of questions from specified chapter
 	def getQuestions(self, count: int, chapter: list) -> list:
@@ -43,21 +84,44 @@ class QuestionSet():
 		output = list()
 		for question in self.randomQuestions:
 			chref = question.chRef
-			try:
-				verse = question.verse
-			except:
-				verse = 11
+			# try:
+			# 	verse = question.verse
+			# except:
+			# 	verse = 11
 
-			if chref in chapter and question.verse <= 10:
+			if chref in chapter:# and question.verse <= 10:
 				output.append(question)
-			if len(output) >= count:
-				break
+			# if len(output) >= count:
+			# 	break
 		return output		
 
+	def questionDump(self) -> list[dict]:
+		output = []
+		for question in self.questions:
+			output += [ {
+				"question": question.q,
+				"type": question.t,
+				"reference": question.r,
+				"answer": question.a
+			} ]
+		return output
 
 path = 'QuizSite0.3/project/static/txt/i-iiCOR.txt'
 
-def makeQuestions():
+def makeQuestions() -> list[Question]:
+	with open('QuizSite0.3/project/static/json/questions.json', 'r') as file:
+		questions = json.load(file)
+		questions: list[dict]
+		output = []
+		
+		# print(json.dumps(questions, indent=4))
+		for question in questions:
+			output.append( Question(question['question'], question['answer'], question['reference'], question['answer']) )
+		
+	return output
+
+
+def makeQuestionsTXT():
 	with open(path, 'r') as file:
 		rawQuestions = file.readlines()
 
@@ -91,10 +155,50 @@ def makeQuestions():
 
 	return questions
 
+def main():
+	ques = QuestionSet(makeQuestions())
+	print('\n'*5)
+	for question in ques.getQuestions(20, ['2C 1']):
+		ques.quiz(question)
 
-# questions = QuestionSet(makeQuestions())
-# questions = questions.getQuestions(26, ['1C 15', '1C 16', '2C 1', '2C 2'])
-# for question in questions:
-# 	# print(question.q)
+def dumpToJSON():
+	ques = QuestionSet(makeQuestions())
+	questions = ques.questionDump()
 
-# # print(questions)
+	with open('QuizSite0.3/project/static/json/questions.json', 'w') as file:
+		file.write(json.dumps(questions, indent=4))
+
+def sortJson():
+	
+	refs = []
+	usedQuestions = []
+	newQuestions = []
+	with open('QuizSite0.3/project/static/json/questions.json', 'r') as file:
+		questions = json.load(file)
+		questions: list[dict]
+	for question in questions:
+		if not (question['reference'] in refs):
+			refs.append(question['reference'])
+
+	refs.sort()
+
+	for ref in refs:
+		for question in questions:
+			if question['reference'] == ref:
+				if question['question'] not in usedQuestions:
+					newQuestions.append(question)
+					usedQuestions.append(question['question'])
+				
+
+	# assert len(newQuestions) == len(questions)
+	with open('QuizSite0.3/project/static/json/questions.json', 'w') as file:
+		file.write(json.dumps(newQuestions, indent=4))
+
+
+
+
+if __name__ == '__main__':
+	questions = QuestionSet(makeQuestions())
+	questionlist = questions.getQuestions(26, ['1C 15', '1C 16', '2C 1', '2C 2'])
+	for question in questionlist:
+		questions.quiz(question)

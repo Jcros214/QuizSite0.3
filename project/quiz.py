@@ -4,13 +4,13 @@ quiz = Blueprint('quiz', __name__)
 
 from . import quizClass
 
-from .static.python.getQuestions import QuestionSet, Question, makeQuestions
+from .static.python.getQuestions import QuestionSet, Question, makeQuestions, allCh
 
 questionset = QuestionSet(makeQuestions())
-quizset = questionset.quizset
+quizset = questionset.getQuestions(25, allCh)
 questionNum = 0
 
-globQuiz = quizClass()
+
 
 # A decorator used to tell the application
 # which URL is associated function
@@ -22,14 +22,16 @@ def quizpage():
     print('\n', '\n', request.form, '\n', '\n')
 
     if request.method == "POST":
-        if request.form.get('back') or request.form.get('next'): # posted from question advance buttons
+        if request.form.get('action'): # posted from question advance buttons
             global questionNum 
-            if request.form.get('back'):
+            if request.form.get('action') == 'back':
                 # User hit 'back'
                 questionNum -= 1
-            else:
+            elif request.form.get('action') == 'next':
                 # User hit 'next'
                 questionNum += 1
+            else:
+                raise ValueError("Action was invalid.")
 
             if questionNum < 1 or questionNum > 20:
                 questionNum = 0
@@ -46,14 +48,14 @@ def quizpage():
         else: # posted from newquiz.html
             team1_name = request.form.get("Team1name")
             team2_name = request.form.get("Team2name")
-            team3_name = request.form.get("Team3name")
+            # team3_name = request.form.get("Team3name")
 
             team1_count = request.form.get("Team1count")
             team2_count = request.form.get("Team2count")
-            team3_count = request.form.get("Team3count")
+            # team3_count = request.form.get("Team3count")
 
             # global Quiz
-            globQuiz = quizClass((team1_name, team1_count),(team2_name, team2_count),(team3_name, team3_count))
+            globQuiz = quizClass((team1_name, team1_count),(team2_name, team2_count))
             print("DebugB:",globQuiz)
             return render_template("quiz.html", quiz=globQuiz, curQues=Question("Hit Next to start quiz", '', '', ''))
  

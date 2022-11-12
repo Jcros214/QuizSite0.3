@@ -37,26 +37,29 @@ material = dict()
 
 words = list()
 
+def getMaterial():
+    for file in bookNameDict:
+        material[file] = {} # Create section for book
+        book = material[file]
+        with open("QuizSite0.3/project/static/txt/" + file + ".txt", 'r') as file:
+            text = file.read().replace('\n',' ')
 
-for file in bookNameDict:
-    material[file] = {} # Create section for book
-    book = material[file]
-    with open("QuizSite0.3/project/static/txt/" + file + ".txt", 'r') as file:
-        text = file.read().replace('\n',' ')
+        for verse in re.finditer(versePattern, text):
+            if int(verse.group(2)) == 1:
+                book[verse.group(1)] = [verse.group(3).strip()]
+            elif verse.group(3).strip() != '':
+                book[verse.group(1)].append(verse.group(3).strip())
 
-    for verse in re.finditer(versePattern, text):
-        if int(verse.group(2)) == 1:
-            book[verse.group(1)] = [verse.group(3).strip()]
-        elif verse.group(3).strip() != '':
-            book[verse.group(1)].append(verse.group(3).strip())
+            for word in verse.group(3).split(" "):
+                # Remove punctuation
+                # ,:;()?.
+                for char in [',',':',';','(',')','?','.']:
+                    word = word.replace(char, '')
 
-        for word in verse.group(3).split(" "):
-            # Remove punctuation
-            # ,:;()?.
-            for char in [',',':',';','(',')','?','.']:
-                word = word.replace(char, '')
+                words.append(word.casefold())
+    return book
 
-            words.append(word.casefold())
+getMaterial()
 
 once =  ([word for word in words if words.count(word) == 1])
 twice = ([word for word in words if words.count(word) == 2])
