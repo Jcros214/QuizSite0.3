@@ -71,11 +71,16 @@ class QuestionSet():
 		random.shuffle(self.randomQuestions)
 		self.quizset = None#self.getQuestions(20, '1C 12')
 	
-	def quiz(self, question: Question):
-		print(question.q)
-		print(question.a)
-		print(question.r,'\n')
+	def quiz(self, question: Question, number = ""):
+		number = f"{number}.\t" if number else ''
+		print(f"{number}{question.q}\nA: [{question.r}] {question.a}\n")
 		input()
+	
+	def quiz_practice(self, question: Question, number = ""):
+		number = f"{number}.\t" if number else ''
+		print(f"{number}{question.q}\n")
+		input()
+		print(f"{question.a}\n[{question.r}]\n\n")
 	
 	# get a set number of questions from specified chapter
 	def getQuestions(self, count: int, chapter: list) -> list:
@@ -198,7 +203,10 @@ def sortJson():
 
 
 if __name__ == '__main__':
+	print('\n'*100)
 	questions = QuestionSet(makeQuestions())
-	questionlist = questions.getQuestions(26, ['1C 15', '1C 16', '2C 1', '2C 2'])
+	questionlist = questions.getQuestions(26, ['2C 1'])
+	number = 1
 	for question in questionlist:
-		questions.quiz(question)
+		questions.quiz_practice(question, number)
+		number += 1

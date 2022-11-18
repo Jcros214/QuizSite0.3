@@ -1,7 +1,3 @@
-# from sqlalchemy import Column, Integer, VARCHAR
-# import sqlalchemy as db
-
-
 # models.py
 
 # db structure:
@@ -25,8 +21,11 @@
 #       In `quiz`, `individual` (answered_correct|answered_incorrect|recieved_foul|appealed|) to/on/for `question` asked as `questionNum`
 
 from flask_login import UserMixin
+
 from . import db
 
+import sqlalchemy
+db: sqlalchemy
 
 class Orginization(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -95,6 +94,23 @@ class User(UserMixin, db.Model):
     team = db.Column(db.String(1000))
     age = db.Column(db.Integer)
     individualID = db.Column(db.Integer)
+
+    # Define the User data-model
+    roles = db.relationship('Role', secondary='user_roles')
+
+# Define the Role data-model
+class Role(db.Model):
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+
+
+# Define the UserRoles association table
+class UserRoles(db.Model):
+    __tablename__ = 'user_roles'
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='CASCADE'))
+    role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))
 
 
 

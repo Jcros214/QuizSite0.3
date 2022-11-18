@@ -28,6 +28,8 @@
   <tr>
     <td>Age: </td><td>{{ user.age }}</td>
   </tr>
-  
+  <tr>
+    <td>Roles: </td><td>{{ ", ".join(user.roles) }}</td></td>
+  </tr>
 </table>
 {% endblock %}
