@@ -9,7 +9,6 @@ db = SQLAlchemy()
 db: SQLAlchemy
 
 
-
 from .static.python.quiz import Quiz as quizClass
 
 def create_app():

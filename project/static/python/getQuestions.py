@@ -44,6 +44,8 @@ import random
 from time import sleep
 import os
 import json
+from pathlib import Path
+
 class Question():
 	def __init__(self, question: str, answer: str, reference: str, type: str) -> None:
 		self.q = question.strip()
@@ -111,10 +113,10 @@ class QuestionSet():
 			} ]
 		return output
 
-path = 'QuizSite0.3/project/static/txt/i-iiCOR.txt'
 
 def makeQuestions() -> list[Question]:
-	with open('QuizSite0.3/project/static/json/questions.json', 'r') as file:
+
+	with open(Path('project/static/json/questions.json').absolute(), 'r') as file:
 		questions = json.load(file)
 		questions: list[dict]
 		output = []
@@ -127,7 +129,7 @@ def makeQuestions() -> list[Question]:
 
 
 def makeQuestionsTXT():
-	with open(path, 'r') as file:
+	with open(Path('project/static/txt/i-iiCOR.txt').absolute(), 'r') as file:
 		rawQuestions = file.readlines()
 
 	questions = list()
