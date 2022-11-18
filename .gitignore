@@ -2,5 +2,5 @@
 *.pyc
 project/DB.xlsx
 project/db.sqlite
-auth
 tmp/tmp.*
+auth/lib/python3.10/site-packages/*/__pycache__
