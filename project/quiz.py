@@ -9,7 +9,10 @@ questionset = QuestionSet(makeQuestions())
 quizset = questionset.getQuestions(25, allCh)
 questionNum = 0
 
+questionctr = 0
+chs = allCh
 
+prac_questions = global_questionset.questions
 
 # A decorator used to tell the application
 # which URL is associated function
@@ -67,18 +70,28 @@ def activequizzes():
     return redirect('/')
 
 
-@quiz.route('/practice')
+@quiz.route('/practice', methods=["GET", "POST"])
 def practice():
-    return render_template('quiz/practice_questions.html')
+    if request.method == "GET":
+        return render_template('quiz/practice_questions.html')
+    else:
+        try:
+            global chs, prac_questions
+            chs = [chapter.strip() for chapter in request.form["chapters"].split(',')]
+            prac_questions = global_questionset.getQuestions(50, chs)
+            return render_template('quiz/practice_questions.html')
+        except:
+            return redirect('/')
+        
 
-questionctr = 0
+
 
 @quiz.route('/quiz/nextquestion')
 def nextquestion():
     # TMP!
     # Future implemntation:
         # Include filters to limit the kind of question that can be returned
-    return f'<a hx-get="/quiz/nextanswer" hx-swap="outerHTML">Question:<br>{global_questionset.questions[questionctr].q}</a>'
+    return f'<a style="text-align: center;" hx-get="/quiz/nextanswer" hx-swap="outerHTML">Question:<br>{prac_questions[questionctr].q}</a>'
 
 @quiz.route('/quiz/nextanswer')
 def nextanswer():
@@ -86,8 +99,8 @@ def nextanswer():
     # TMP!
     # Future implemntation:
         # Include filters to limit the kind of question that can be returned
-    ques = global_questionset.questions[questionctr].q
-    ans  = global_questionset.questions[questionctr].a
+    ques = prac_questions[questionctr].q
+    ans  = prac_questions[questionctr].a
     questionctr += 1
-    return f'<a hx-get="/quiz/nextquestion" hx-swap="outerHTML">Question:<br>{ques}<br><br><br><br>Answer:<br>{ans}</a>'
+    return f'<a style="text-align: center;" hx-get="/quiz/nextquestion" hx-swap="outerHTML">Question:<br>{ques}<br><br><br><br>Answer:<br>{ans}</a>'
 

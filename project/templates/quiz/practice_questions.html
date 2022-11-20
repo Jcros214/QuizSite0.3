@@ -4,14 +4,17 @@
 <script src="https://unpkg.com/htmx.org@1.8.4"></script>
 
 <h1>{% block title %} Practice Quiz {% endblock %}</h1>
-	<style>
-		a {
-			text-align: center;
-			padding:0%;
-		}
-	</style>
-		<!-- have a button POST a click via AJAX -->
+		<div>
+			<h3>Define Chapters</h3>
+			<h4>The chapters must formatted correctly!<br>(should be a list of comma seperated chapters formatted as below)</h4><br>
+			<h4>Ex: 1C 5, 1C6, 1C7, 1C 12, 2C 1</h4>
+			<form method="post">
+				<input type="text" name="chapters" id="chapters">
+				<button type="submit">Submit</button>
+			</form>
+		</div>
 		<div style="text-align: center;">
+				<h4 style="text-align: center;">Click the text to move on.</h4><br>
 				<button hx-get="/quiz/nextquestion" hx-swap="outerHTML" style="padding: 1em;">Click to start</button>
 		</div>
 
