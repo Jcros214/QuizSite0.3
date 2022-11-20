@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script src="https://unpkg.com/htmx.org@1.8.4"></script>
+
+<h1>{% block title %} Practice Quiz {% endblock %}</h1>
+	<style>
+		a {
+			text-align: center;
+			padding:0%;
+		}
+	</style>
+		<!-- have a button POST a click via AJAX -->
+		<div style="text-align: center;">
+				<button hx-get="/quiz/nextquestion" hx-swap="outerHTML" style="padding: 1em;">Click to start</button>
+		</div>
+
+{% endblock %}

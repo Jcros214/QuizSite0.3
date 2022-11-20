@@ -10,6 +10,9 @@ db: SQLAlchemy
 
 
 from .static.python.quiz import Quiz as quizClass
+from .static.python.getQuestions import QuestionSet, makeQuestions
+
+global_questionset = QuestionSet(makeQuestions())
 
 def create_app():
     app = Flask(__name__)
@@ -35,17 +38,23 @@ def create_app():
 
     # blueprint for auth routes in our app
     from .auth import auth as auth_blueprint
+    from .quiz import quiz as quiz_blueprint
+    from .main import main as main_blueprint
+    from .data import data as misc_blueprint
+    
     app.register_blueprint(auth_blueprint)
+    app.register_blueprint(main_blueprint)
+    app.register_blueprint(quiz_blueprint)
+    app.register_blueprint(misc_blueprint)
+
+
+
+    
+
 
     # blueprint for non-auth parts of app
-    from .main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
-
     # blueprint for quiz parts of app
-
-    from .quiz import quiz as quiz_blueprint
-    app.register_blueprint(quiz_blueprint)
-
+    # blueprint for quiz parts of app
     
 
     return app

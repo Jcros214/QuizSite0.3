@@ -2,8 +2,7 @@ from flask import Blueprint, redirect, request, render_template
 
 quiz = Blueprint('quiz', __name__)
 
-from . import quizClass
-
+from . import quizClass, global_questionset
 from .static.python.getQuestions import QuestionSet, Question, makeQuestions, allCh
 
 questionset = QuestionSet(makeQuestions())
@@ -66,3 +65,29 @@ def quizpage():
 @quiz.route('/activequizzes')
 def activequizzes():
     return redirect('/')
+
+
+@quiz.route('/practice')
+def practice():
+    return render_template('quiz/practice_questions.html')
+
+questionctr = 0
+
+@quiz.route('/quiz/nextquestion')
+def nextquestion():
+    # TMP!
+    # Future implemntation:
+        # Include filters to limit the kind of question that can be returned
+    return f'<a hx-get="/quiz/nextanswer" hx-swap="outerHTML">Question:<br>{global_questionset.questions[questionctr].q}</a>'
+
+@quiz.route('/quiz/nextanswer')
+def nextanswer():
+    global questionctr
+    # TMP!
+    # Future implemntation:
+        # Include filters to limit the kind of question that can be returned
+    ques = global_questionset.questions[questionctr].q
+    ans  = global_questionset.questions[questionctr].a
+    questionctr += 1
+    return f'<a hx-get="/quiz/nextquestion" hx-swap="outerHTML">Question:<br>{ques}<br><br><br><br>Answer:<br>{ans}</a>'
+
