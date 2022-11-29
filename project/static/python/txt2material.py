@@ -41,7 +41,7 @@ def getMaterial():
     for file in bookNameDict:
         material[file] = {} # Create section for book
         book = material[file]
-        with open("QuizSite0.3/project/static/txt/" + file + ".txt", 'r') as file:
+        with open("project/static/txt/" + file + ".txt", 'r') as file:
             text = file.read().replace('\n',' ')
 
         for verse in re.finditer(versePattern, text):
@@ -65,7 +65,7 @@ once =  ([word for word in words if words.count(word) == 1])
 twice = ([word for word in words if words.count(word) == 2])
 
 
-with open("QuizSite0.3/project/static/json/quotes.json") as json_file:
+with open("project/static/json/quotes.json") as json_file:
     quotes = json.load(json_file)
 
 
@@ -172,7 +172,7 @@ html = """
 {% endblock %}
 """
 
-with open('QuizSite0.3/project/templates/material.html', 'w') as file:
+with open('project/templates/material.html', 'w') as file:
         file.write(html)
         print("HTML written!")
 
