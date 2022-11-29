@@ -63,3 +63,23 @@ class Quiz():
 			self.resetSwitch = '<td></td>'*place + '<td><button class="button"></button></td>'
 		except:
 			pass
+	
+	def dump_json(self):
+		teams = []
+
+
+
+		json_out = {
+			"id": self.id,
+			"qnum": 0,
+			"question": {
+				"q": "",
+				"a": "",
+				"r": "",
+				"t": ""
+			},
+			"teams": ""
+		}
+
+	def load_json(self, quizID: int):
+		...

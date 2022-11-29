@@ -40,8 +40,6 @@
 		td {
 			margin: 0 35%;
 		}
-	</style>
-	<style>
 		h2,h3,h4,h5 {
 			text-align: center;
 			padding:0%;
@@ -65,11 +63,17 @@
 	<table style="text-align: center; margin-top: 10%; margin-right: auto; margin-left: auto;height: 70%;width: 80%;">
 		<tr>
 			<td>
-				<button onclick="addQuizzer('left')">+</button><button onclick="rmQuizzer('left')">-</button>
+
+				<button hx-get="/quiz/nextquestion" hx-swap="outerHTML" style="padding: 1em;">Click to start</button>
+
+
+				<button onclick="addQuizzer('left')">+</button>
+				<button onclick="rmQuizzer('left')">-</button>
 			</td>
 			<td></td>
 			<td>
-				<button onclick="addQuizzer('right')">+</button><button onclick="rmQuizzer('right')">-</button>
+				<button onclick="addQuizzer('right')">+</button>
+				<button onclick="rmQuizzer('right')">-</button>
 			</td>
 		</tr>
 		<tr>

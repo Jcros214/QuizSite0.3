@@ -1,0 +1,21 @@
+[
+	{
+		"id": 0,
+		"question": "",
+		"questionnum": 1,
+		"team1": {
+			"score": 0,
+			"quizzers": [
+				{
+					"name": "Quizzer1",
+					"correct": 0,
+					"errors": 0,
+					"uncounted_errrors": 0
+				},
+			]
+		},
+		"team2": {
+			"count": 5
+		}
+	}
+]

@@ -9,7 +9,6 @@ db = SQLAlchemy()
 db: SQLAlchemy
 
 
-from .static.python.quiz import Quiz as quizClass
 from .static.python.getQuestions import QuestionSet, makeQuestions
 
 global_questionset = QuestionSet(makeQuestions())
