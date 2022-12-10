@@ -23,6 +23,7 @@ em {
   }
   td {
 	padding: 0 15px;
+	vertical-align: top;
   }
   
   h4 { /*Verse*/

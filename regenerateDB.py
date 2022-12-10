@@ -1,4 +1,8 @@
 import os
+
+with open('test.txt', 'w') as file:
+	file.write("Proc is working.")
+
 from time import sleep
 from project import db, create_app, models
 from werkzeug.security import generate_password_hash
@@ -6,7 +10,7 @@ from project.models import User
 # from project.auth import create_user
 
 try:
-	os.remove('QuizSite0.3/project/db.sqlite')
+	os.remove('QuizSite/project/db.sqlite')
 except:
 	pass
 os.getcwd()

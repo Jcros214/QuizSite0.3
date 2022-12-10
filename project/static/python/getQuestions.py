@@ -40,6 +40,11 @@ mych = [
 	'2C 1'
 ]
 
+currentch = [
+	'2C 5',
+	'2C 6'
+]
+
 import random
 from time import sleep
 import os
@@ -162,12 +167,6 @@ def makeQuestionsTXT():
 
 	return questions
 
-def main():
-	ques = QuestionSet(makeQuestions())
-	print('\n'*5)
-	for question in ques.getQuestions(20, ['2C 1']):
-		ques.quiz(question)
-
 def dumpToJSON():
 	ques = QuestionSet(makeQuestions())
 	questions = ques.questionDump()
@@ -202,12 +201,18 @@ def sortJson():
 		file.write(json.dumps(newQuestions, indent=4))
 
 
+def main():
+	ques = QuestionSet(makeQuestions())
+	print('\n'*5)
+	for question in ques.getQuestions(20, currentch):
+		ques.quiz(question)
+
 
 
 if __name__ == '__main__':
 	print('\n'*100)
 	questions = QuestionSet(makeQuestions())
-	questionlist = questions.getQuestions(26, ['2C 1'])
+	questionlist = questions.getQuestions(26, currentch)
 	number = 1
 	for question in questionlist:
 		questions.quiz_practice(question, number)

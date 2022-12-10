@@ -18,7 +18,7 @@ def profile():
     return render_template('profile.html', user=current_user)
 
 @main.route('/material')
-@login_required
+# @login_required
 def material():
     style = """\
         <style>

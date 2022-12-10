@@ -139,19 +139,17 @@ for book in material:
         ch_str = str(chapter)
         chapter = book[chapter]
         for verse in chapter:
-
-            
-
-            html = html + f"""
-      <tr>
-        <td>{verseNum(bookName, ch_str, chapter.index(verse)+1)}</td>
-        <td>
-          <h4>
-            """
-            for word in verse.split(" "):
-                html = html + keywordify(word)
-            html = html + f"""
-          </h4>
+            if True:#verseNum(bookName, ch_str, chapter.index(verse)+1) != chapter.index(verse)+1:
+                html = html + f"""
+        <tr>
+            <td>{verseNum(bookName, ch_str, chapter.index(verse)+1)}</td>
+            <td>
+            <h4>
+                """
+                for word in verse.split(" "):
+                    html = html + keywordify(word)
+                html = html + f"""
+        </h4>
         </td>
       </tr>"""
         html = html + f"""
