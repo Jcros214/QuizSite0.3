@@ -20,38 +20,74 @@ def profile():
 @main.route('/material')
 # @login_required
 def material():
-    style = """\
+    letterstyle = """\
         <style>
-dt {
-visibility: hidden;
-display: inline-block;
-font-size: 0;
-}
-dt::first-letter {
-visibility: visible;
-font-size: 20pt;
-}
-dt:hover {
-visibility: visible;
-font-size: 20pt;
-}
-</style>
+            dt {
+                visibility: hidden;
+                display: inline-block;
+                font-size: 0;
+            }
+            dt::first-letter {
+                visibility: visible;
+                font-size: 20pt;
+            }
+            dt:hover {
+                visibility: visible;
+                font-size: 20pt;
+            }
+        </style>
 """
+    wordstyle = """\
+        <style>
+            dt {
+                font-size: 20;
+                display: inline-block;
 
-    print('\n\n', request.args)
-    try:
-        if request.args['words']=='true':
-            style = """\
-                <style>
-dt {
-display: inline-block;
-}
-</style>
+            }
+        </style>
 """
-            return render_template('material.html', style=style)
-    except:
-        pass
-    return render_template('material.html', style=style)
+    qletterstyle = """\
+        <style>
+            dt {
+                visibility: hidden;
+                display: inline-block;
+                font-size: 0;
+            }
+            dt::first-letter {
+                visibility: visible;
+                font-size: 20pt;
+            }
+            dt:hover {
+                visibility: visible;
+                font-size: 20pt;
+            }
+            .noquote {
+                display: none;
+            }
+            </style>
+"""
+    qwordstyle = """
+        <style>
+            dt {
+                font-size: 20;
+                display: inline-block;
+
+            }
+            .noquote {
+                display: none;
+            }
+
+        </style>
+    """
+    style = {
+        'letters':  letterstyle,
+        'words':    wordstyle,
+        'qletters': qletterstyle,
+        'qwords':   qwordstyle,
+        None: wordstyle
+    }
+
+    return render_template('material.html', style=style[request.args.get('disp')])
 
 @main.route('/quiztracker')
 # @login_required

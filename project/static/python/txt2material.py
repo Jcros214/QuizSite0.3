@@ -115,8 +115,11 @@ html = '''{{ style|safe }}
     <table style="margin: auto">
         <tr>
             <td>
-                <button type="submit" type="button" name="words" value="true">Show Words</button>
-                <button type="submit" type="button" name="words" value="flase">Show Letters</button>
+                <button type="submit" type="button" name="disp" value="words">Words - All</button>
+                <button type="submit" type="button" name="disp" value="letters">Letters - All</button>
+                <button type="submit" type="button" name="disp" value="qwords">Words - Quotes</button>
+                <button type="submit" type="button" name="disp" value="qletters">Letters - Quotes</button>
+                
             </td>
         </tr>
     </table>
@@ -141,7 +144,7 @@ for book in material:
         for verse in chapter:
             if True:#verseNum(bookName, ch_str, chapter.index(verse)+1) != chapter.index(verse)+1:
                 html = html + f"""
-        <tr>
+        <tr class="{"quote" if int(chapter.index(verse)+1) in quotes[bookName][ch_str] else "noquote"}">
             <td>{verseNum(bookName, ch_str, chapter.index(verse)+1)}</td>
             <td>
             <h4>

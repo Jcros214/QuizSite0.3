@@ -118,6 +118,19 @@ class QuestionSet():
 			} ]
 		return output
 
+	def dump_from_chs(self, chs: list[str]):
+		output = []
+		for question in self.questions:
+			if question.chRef in chs:
+				output += [ {
+					"question": question.q,
+					"type": question.t,
+					"reference": question.r,
+					"answer": question.a
+				} ]
+		return output
+
+
 
 def makeQuestions() -> list[Question]:
 
@@ -169,9 +182,9 @@ def makeQuestionsTXT():
 
 def dumpToJSON():
 	ques = QuestionSet(makeQuestions())
-	questions = ques.questionDump()
+	questions = ques.dump_from_chs(['2C 5', '2C 6']) #ques.questionDump()
 
-	with open('QuizSite0.3/project/static/json/questions.json', 'w') as file:
+	with open('project/static/json/questions.json', 'w') as file:
 		file.write(json.dumps(questions, indent=4))
 
 def sortJson():
@@ -210,10 +223,15 @@ def main():
 
 
 if __name__ == '__main__':
-	print('\n'*100)
 	questions = QuestionSet(makeQuestions())
-	questionlist = questions.getQuestions(26, currentch)
-	number = 1
-	for question in questionlist:
-		questions.quiz_practice(question, number)
-		number += 1
+
+	with open('project/static/json/2C5-2C6.json', 'w') as file:
+		file.write(json.dumps(questions.dump_from_chs(['2C 5', '2C 6']), indent=4))
+
+	# print('\n'*100)
+	# questions = QuestionSet(makeQuestions())
+	# questionlist = questions.getQuestions(26, currentch)
+	# number = 1
+	# for question in questionlist:
+	# 	questions.quiz_practice(question, number)
+	# 	number += 1
