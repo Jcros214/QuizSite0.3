@@ -4,6 +4,11 @@ This project is hosted [here](https://www.quizbox.app).
 # Ideas/Todo
 - Spectator view:
 	- Show team's score and individuals' stats
+- Integration with QuizBox
+	- Probably something that would be done in DigitalOcean with another droplet
+- Tournament Manager Tools
+	- generate bracket, schedule, etc
+	- generate questions?
 
 
 

@@ -1,0 +1,68 @@
+<!-- templates/signup.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding-left: 30px;" class="column is-4 is-offset-4">
+    <h3 class="title">Sign Up</h3>
+    <div class="box">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+            </div>
+        {% endif %}
+        {% endwith %}
+        <form method="POST" action="/register">
+			<label for="name">Name:</label><br>
+			<input type="text" id="name" name="name" required><br>
+			
+			<label for="username">Username:</label><br>
+			<input type="text" id="username" name="username" required><br>
+			
+			<label for="password">Password:</label><br>
+			<input type="password" id="password" name="password" required><br>
+			
+			<label for="church_name">Church:</label><br>
+			<select id="church_name" name="church_name" required>
+				{% for church in churches %}
+				<option value="{{ church.id }}">{{ church.name }}</option>
+				{% endfor %}
+			</select><br>
+			
+			<label for="team_name">Team:</label><br>
+			<select id="team_name" name="team_name" required>
+				{% for team in teams %}
+				<option value="{{ team.id }}" data-church-id="{{ team.church_id }}">{{ team.name }}</option>
+				{% endfor %}
+			</select><br>
+			
+			<label for="age">Age:</label><br>
+			<input type="number" id="age" name="age" required><br>
+			
+			<label for="role_name">Role:</label><br>
+			<select id="role_name" name="role_name" required>
+				{% for role in roles %}
+				<option value="{{ role.id }}">{{ role.name }}</option>
+				{% endfor %}
+			</select><br>
+			
+			<input type="submit" value="Submit">
+		</form>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script>
+		$('#church_name').on('change', function() {
+			var selectedChurchId = $(this).val();
+			$('#team_name option').each(function() {
+			var teamChurchId = $(this).data('church-id');
+			if (teamChurchId == selectedChurchId) {
+				$(this).show();
+			} else {
+				$(this).hide();
+			}
+			});
+		});
+		</script>
+    </div>
+</div>
+{% endblock %}

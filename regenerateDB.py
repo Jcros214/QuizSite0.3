@@ -6,7 +6,7 @@ with open('test.txt', 'w') as file:
 from time import sleep
 from project import db, create_app, models
 from werkzeug.security import generate_password_hash
-from project.models import User
+from project.new_models import User
 # from project.auth import create_user
 
 try:
